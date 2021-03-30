@@ -1,0 +1,15 @@
+{% extends 'scishare/base.html' %}
+
+{% block title_block %}
+	Login
+{% endblock %}
+
+{% block body_block %}
+<h1>Login to SciShare</h1>
+<form id = "login_form" method = "post" action = "{% url 'scishare:login' %}">
+	{% csrf_token %}
+	Username: <input type="text" name="username" value = "" size = "60" /><br />
+	Password: <input type="text" name="password" value = "" size = "60" /><br />
+	<input type= "submit" value= "submit" />
+</form>
+{% endblock %}

@@ -29,6 +29,10 @@ SECRET_KEY = '%rgh03^&eqcbuk29iuu4^1mti4n8veadwcj=8og*u#8!*4#vh('
 DEBUG = True
 
 ALLOWED_HOSTS = ['rbozko.pythonanywhere.com', '127.0.0.1']
+REGISTRATION_OPEN=True
+REGISTRATION_AUTO_LOGIN=True
+LOGIN_REDIRECT_URL='scishare:home'
+LOGIN_URL='auth_login'
 
 
 # Application definition
@@ -40,7 +44,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'scishare'
+    'scishare',
+    'registration',
+
+]
+
+PASSWORD_HASHERS=[
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+
+
 ]
 
 MIDDLEWARE = [
@@ -95,6 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+         'OPTIONS': {
+            'min_length': 8,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
