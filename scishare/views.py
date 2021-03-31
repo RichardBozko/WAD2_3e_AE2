@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from scishare.forms import UserForm, UserProfileForm
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.shortcuts import redirect
+from .models import Category, Study. UserProfile
 
 def home(request):
     context_dict = {'boldmessage': 'context dictionary'}
@@ -85,30 +86,121 @@ def login(request):
 
 
 #following make visible only after log in
+
+@login_required
+def user_logout(request):
+    # Since we know the user is logged in, we can now just log them out.
+    logout(request)
+    # Take the user back to the homepage.
+    return redirect(reverse('scishare:home'))
+
+@login_required    
 def search_results(request):
     return HttpResponse("show search results")
 
+@login_required
 def categories(request):
-    return HttpResponse("list of categories")
+    obj = Category.objects.all()
+    
+    return render(request, 'categories.html',{'obj':obj})
 
+@login_required    
+def study_list(reqest, id):
+    obj = get_object_or_404(Category, pk = id)
+    
+    return render(reqest, 'study_list.html', {'obj':obj})
+
+@login_required
 def add_category(request):
-    return HttpResponse("add category form")
+    form = CategoryForm()
+    # A HTTP POST?
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            form.save(commit=True)
+            # Now that the category is saved, we could confirm this.
+            # For now, just redirect the user back to the home page.
+            return redirect('/scishare/')
+        else:
+            # The supplied form contained errors -
+            # just print them to the terminal.
+            print(form.errors)
+    
+    # Will handle the bad form, new form, or no form supplied cases.
+    # Render the form with error messages (if any).
+    return render(request, 'scishare/add_category.html', {'form': form})
 
-def show_category(request):
-    return HttpResponse("show category studies")
+@login_required
+def show_category(request, category_name_slug):
+    # Create a context dictionary which we can pass
+    # to the template rendering engine.
+    context_dict = {}
+    try:
+        # Can we find a category name slug with the given name?
+        # If we can't, the .get() method raises a DoesNotExist exception.
+        # The .get() method returns one model instance or raises an exception.
+        category = Category.objects.get(slug=category_name_slug)
+        # Retrieve all of the associated pages.
+        # The filter() will return a list of page objects or an empty list.
+        studies = Study.objects.filter(category=category)
+        # Adds our results list to the template context under name pages.
+        context_dict['studies'] = studies
+        # We also add the category object from
+        # the database to the context dictionary.
+        # We'll use this in the template to verify that the category exists.
+        context_dict['category'] = category
+    except Category.DoesNotExist:
+        # We get here if we didn't find the specified category.
+        # Don't do anything -
+        # the template will display the "no category" message for us.
+        context_dict['category'] = None
+        context_dict['studies'] = None
+        # Go render the response and return it to the client.
+    return render(request, 'scishare/category.html', context=context_dict)
 
-def add_study(request):
-    return HttpResponse("add study")
+@login_required
+def add_study(request, category_name_slug):
+     try:
+        category = Category.objects.get(slug=category_name_slug)
+    except Category.DoesNotExist:
+        category = None
+    
+    # You cannot add a page to a Category that does not exist...
+    if category is None:
+        return redirect('/scishare/')
+    
+    form = PageForm()
+    if request.method == 'POST':
+        form = StudyForm(request.POST)
+            
+        if form.is_valid():
+            if category:
+                study = form.save(commit=False)
+                study.category = category
+                study.save()
+                return redirect(reverse('scishare:show_category',
+                kwargs={'category_name_slug':
+                category_name_slug}))
+        else:
+            print(form.errors)
+    context_dict = {'form': form, 'category': category}
+    return render(request, 'scishare/add_page.html', context=context_dict)
 
+@login_required
 def most_liked(request):
     return HttpResponse("list of most liked studies")
 
+@login_required
 def groups(request):
     return HttpResponse("list of groups")
 
+@login_required
 def create_group(request):
     return HttpResponse("create a group")
 
+@login_required
 def show_group(request):
     return HttpResponse("show list of pages of the group")
 
