@@ -75,7 +75,7 @@ def login(request):
                 login(request,user)
                 return redirect(reverse('scishare:base'))
             else:
-                return HttpResponse("You cannot access your accout right now")
+                return HttpResponse("You cannot access your account right now")
         else:
             # User object is None -> we got faulty details
             print(f"Invalid login details: {username}, {password}")
@@ -99,19 +99,21 @@ def user_logout(request):
 def search_results(request):
     return HttpResponse("show search results")
 
-@login_required
+#@login_required
 def categories(request):
     obj = Category.objects.all()
-    
-    return render(request, 'categories.html',{'obj':obj})
+
+    context_dict = {}
+    context_dict['categories'] = obj
+    return render(request, 'scishare/categories.html', context=context_dict)
 
 @login_required    
-def study_list(reqest, id):
+def study_list(request, id):
     obj = get_object_or_404(Category, pk = id)
     
-    return render(reqest, 'study_list.html', {'obj':obj})
+    return render(request, 'scishare/study_list.html', {'obj':obj})
 
-@login_required
+#@login_required
 def add_category(request):
     form = CategoryForm()
     # A HTTP POST?
@@ -196,13 +198,13 @@ def most_liked(request):
     context_dict = {}
     context_dict['studies'] = study_list
     
-    return render (request, 'most_liked.html', context=context_dict)
+    return render (request, 'scishare/most_liked.html', context=context_dict)
 
 @login_required
 def groups(request):
     obj  = Group.object.all()
     
-    return render (request, 'groups.html', {'obj':obj})
+    return render (request, 'scishare/groups.html', {'obj':obj})
 
 @login_required
 def create_group(request):
