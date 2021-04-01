@@ -190,19 +190,47 @@ def add_study(request, category_name_slug):
 
 @login_required
 def most_liked(request):
-    return HttpResponse("list of most liked studies")
+    study_list = Study.objects.order_by('-up_votes')[:5]
+    
+    context_dict = {}
+    context_dict['studies'] = study_list
+    
+    return render (reqest, 'most_liked.html', context=context_dict)
 
 @login_required
 def groups(request):
-    return HttpResponse("list of groups")
+    obj  = Group.object.all()
+    
+    return render (reqest, 'groups.html', {'obj':obj})
 
 @login_required
 def create_group(request):
-    return HttpResponse("create a group")
+    form = GroupForm()
+    # A HTTP POST?
+    if request.method == 'POST':
+        form = CategoryForm(request.POST)
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            form.save(commit=True)
+            # Now that the category is saved, we could confirm this.
+            # For now, just redirect the user back to the home page.
+            return redirect('/scishare/')
+        else:
+            # The supplied form contained errors -
+            # just print them to the terminal.
+            print(form.errors)
+    
+    # Will handle the bad form, new form, or no form supplied cases.
+    # Render the form with error messages (if any).
+    return render(request, 'scishare/create_group.html', {'form': form})
 
 @login_required
-def show_group(request):
-    return HttpResponse("show list of pages of the group")
+def group_list(request, id):
+    obj = get_object_or_404(Group, pk = id)
+    
+    return render(reqest, 'group_list.html', {'obj':obj})
+  
 
 
 
