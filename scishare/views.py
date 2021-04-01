@@ -3,11 +3,12 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from scishare.forms import UserForm, UserProfileForm
-from django.contrib.auth import authenticate, login
+from scishare.forms import CategoryForm, StudyForm, UserForm, UserProfileForm
+from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.shortcuts import redirect
-from .models import Category, Study. UserProfile
+from scishare.models import Category, Study, UserProfile
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     context_dict = {'boldmessage': 'context dictionary'}
@@ -62,7 +63,7 @@ def login(request):
     if request.method=='POST':
         # Get UN and PW from user login form
         username = request.POST.get('username')
-        password = reqest.POST.get('password')
+        password = request.POST.get('password')
         # Check whether UN+PW combination is valid
         user = authenticate(username = username, password = password)
 
@@ -162,7 +163,7 @@ def show_category(request, category_name_slug):
 
 @login_required
 def add_study(request, category_name_slug):
-     try:
+    try:
         category = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
         category = None
@@ -171,7 +172,7 @@ def add_study(request, category_name_slug):
     if category is None:
         return redirect('/scishare/')
     
-    form = PageForm()
+    form = StudyForm()
     if request.method == 'POST':
         form = StudyForm(request.POST)
             
@@ -195,13 +196,13 @@ def most_liked(request):
     context_dict = {}
     context_dict['studies'] = study_list
     
-    return render (reqest, 'most_liked.html', context=context_dict)
+    return render (request, 'most_liked.html', context=context_dict)
 
 @login_required
 def groups(request):
     obj  = Group.object.all()
     
-    return render (reqest, 'groups.html', {'obj':obj})
+    return render (request, 'groups.html', {'obj':obj})
 
 @login_required
 def create_group(request):
@@ -229,7 +230,7 @@ def create_group(request):
 def group_list(request, id):
     obj = get_object_or_404(Group, pk = id)
     
-    return render(reqest, 'group_list.html', {'obj':obj})
+    return render(request, 'group_list.html', {'obj':obj})
   
 
 
