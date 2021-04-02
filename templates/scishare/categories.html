@@ -1,0 +1,20 @@
+{% extends 'scishare/base.html' %}
+{% block title_block %}
+      Categories
+{% endblock %}
+{% block body_block %}
+ <div>
+            {% if categories %}
+            <h2>Most Liked Categories</h2>
+            <ul>
+                {% for category in categories %}
+                    <li>{{ category.name }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>There are no categories present.</strong>
+            {% endif %}
+     <a href="{% url 'scishare:add_category' %}">Add a Category</a>
+
+ </div>
+{% endblock %}

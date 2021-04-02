@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{% load staticfiles %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +16,6 @@
     {% endblock %}
 </div>
 <div>
-    <! -- make visible only if user is authenticated -->
     {% block sidebar_block %}
         <li><a href="{% url 'scishare:categories' %}">Categories</a></li>
         <li><a href="{% url 'scishare:most_liked' %}">Most Liked</a></li>

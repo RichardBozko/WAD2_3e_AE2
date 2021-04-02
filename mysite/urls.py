@@ -28,6 +28,9 @@ urlpatterns = [
     # The above maps any URLs starting with scishare/ to be handled by scishare.
     path('admin/', admin.site.urls),
     #path('accounts/', include('registration.backends.simple.urls')),
+<<<<<<< HEAD
     path('accounts/', include('django.contrib.auth.urls')),
+=======
+>>>>>>> d3447c21ae5bfaee3137c723c8961b06848fd21d
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from scishare.forms import UserCreateForm, UserUpdateForm
+from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm, UserForm, UserProfileForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as log_in
 from django.urls import reverse
 from django.shortcuts import redirect
 #from django.contrib import send_mail
-from .models import Category, Study, UserProfile
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model
+#from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 #from django_email_verification import send_mail
 from django.contrib import messages
-
+from scishare.models import Category, Study, UserProfile
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     context_dict = {'boldmessage': 'context dictionary'}
@@ -70,7 +68,7 @@ def login(request):
     if request.method=='POST':
         # Get UN and PW from user login form
         username = request.POST.get('username')
-        password = reqest.POST.get('password')
+        password = request.POST.get('password')
         # Check whether UN+PW combination is valid
         user = authenticate(username = username, password = password)
 
@@ -82,7 +80,7 @@ def login(request):
                 login(request,user)
                 return redirect(reverse('scishare:home'))
             else:
-                return HttpResponse("You cannot access your accout right now")
+                return HttpResponse("You cannot access your account right now")
         else:
             # User object is None -> we got faulty details
             print(f"Invalid login details: {username}, {password}")
@@ -132,9 +130,6 @@ def login(request):
         else:
             return render(request,'registration/login.html')
     
-def logoutUser(request):
-    logout(request)
-    return redirect('scishare:home')
 
 
 def userAccount(request):
@@ -162,19 +157,21 @@ def user_logout(request):
 def search_results(request):
     return HttpResponse("show search results")
 
-@login_required
+#@login_required
 def categories(request):
     obj = Category.objects.all()
-    
-    return render(request, 'categories.html',{'obj':obj})
+
+    context_dict = {}
+    context_dict['categories'] = obj
+    return render(request, 'scishare/categories.html', context=context_dict)
 
 @login_required    
-def study_list(reqest, id):
+def study_list(request, id):
     obj = get_object_or_404(Category, pk = id)
     
-    return render(reqest, 'study_list.html', {'obj':obj})
+    return render(request, 'scishare/study_list.html', {'obj':obj})
 
-@login_required
+#@login_required
 def add_category(request):
     form = CategoryForm()
     # A HTTP POST?
@@ -235,7 +232,7 @@ def add_study(request, category_name_slug):
     if category is None:
         return redirect('/scishare/')
     
-    form = PageForm()
+    form = StudyForm()
     if request.method == 'POST':
         form = StudyForm(request.POST)
             
@@ -259,13 +256,13 @@ def most_liked(request):
     context_dict = {}
     context_dict['studies'] = study_list
     
-    return render (reqest, 'most_liked.html', context=context_dict)
+    return render (request, 'scishare/most_liked.html', context=context_dict)
 
 @login_required
 def groups(request):
     obj  = Group.object.all()
     
-    return render (reqest, 'groups.html', {'obj':obj})
+    return render (request, 'scishare/groups.html', {'obj':obj})
 
 @login_required
 def create_group(request):
@@ -293,7 +290,7 @@ def create_group(request):
 def group_list(request, id):
     obj = get_object_or_404(Group, pk = id)
     
-    return render(reqest, 'group_list.html', {'obj':obj})
+    return render(request, 'group_list.html', {'obj':obj})
   
 
 
