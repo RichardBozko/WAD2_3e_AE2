@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm, UserForm, UserProfileForm
+from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as log_in
 from django.urls import reverse
