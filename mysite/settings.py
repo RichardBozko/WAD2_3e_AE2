@@ -15,9 +15,10 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+BASE_DIR = os.path.join(TEMPLATE_DIR, 'scishare')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 MEDIA_DIR = os.path.join(BASE_DIR, 'media')
-
+MEDIA_ROOT = MEDIA_DIR
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -34,18 +35,29 @@ REGISTRATION_AUTO_LOGIN=True
 LOGIN_REDIRECT_URL='scishare:home'
 LOGIN_URL='auth_login'
 
+# SMTP email config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'scisharegu@gmail.com'
+EMAIL_HOST_PASSWORD = '@h4K8rhgo4JCP.'
 
 # Application definition
 
 INSTALLED_APPS = [
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'scishare',
+    #'scishare',
     'registration',
+    
+    'django_email_verification',
+    'scishare.apps.ScishareConfig',
 
 ]
 
@@ -73,7 +85,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR, ],
+        'DIRS': [TEMPLATE_DIR, BASE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -136,7 +148,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-MEDIA_ROOT = MEDIA_DIR
+
 MEDIA_URL = '/media/'
 
 

@@ -1,0 +1,28 @@
+{%  extends 'scishare/base.html' %}
+{% load static %}
+{% block body_block %}
+
+<style>
+	.pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<h3 style="text-align: center">User Profile</h3>
+
+
+<form method="POST" action="" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{uform.as_p}}
+
+	<input class="btn btn-primary" type="submit" name="Update Information">
+</form>
+<br/>
+<img class="pic" src="{{request.UserProfile.user.picture.url}}" >
+
+
+
+{% endblock %}

@@ -46,9 +46,14 @@ class Group(models.Model):
     def __str__(self):
         return self.group_name
 
+
 class UserProfile(models.Model):
+
     user = models.OneToOneField(User, on_delete = models.CASCADE)
-    picture = models.ImageField(upload_to = 'profile_images', blank = True)
+    username = models.CharField(max_length=50, null=True)
+    #picture = models.ImageField(upload_to = 'profile_images', blank = True)
+    picture = models.ImageField(default = "blank_p_1.jpg", null = True, blank = True)
+    email = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return self.user.username

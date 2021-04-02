@@ -3,16 +3,24 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from scishare.forms import UserForm, UserProfileForm
-from django.contrib.auth import authenticate, login
+from scishare.forms import UserCreateForm, UserUpdateForm
+from django.contrib.auth import authenticate, logout
+from django.contrib.auth import login as log_in
 from django.urls import reverse
 from django.shortcuts import redirect
-from .models import Category, Study. UserProfile
+#from django.contrib import send_mail
+from .models import Category, Study, UserProfile
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
+#from django_email_verification import send_mail
+from django.contrib import messages
+
 
 def home(request):
     context_dict = {'boldmessage': 'context dictionary'}
     return render(request, 'scishare/home.html', context=context_dict)
-
+'''
 def register(request):
     #Determines the success status of the registration
     registered = False
@@ -50,7 +58,7 @@ def register(request):
 
 
     return render(request,
-        'scishare/register.html',
+        'registration/registration_complete.html',
         context = {
             'user_form': user_form,
             'profile_form': profile_form,
@@ -72,7 +80,7 @@ def login(request):
             # Is account active (might not keep this block in the final app version)
             if user.is_active:
                 login(request,user)
-                return redirect(reverse('scishare:base'))
+                return redirect(reverse('scishare:home'))
             else:
                 return HttpResponse("You cannot access your accout right now")
         else:
@@ -81,9 +89,65 @@ def login(request):
             return HttpResponse("Invalid login details supplied.")
     else:
         # We did not arrive ehre via a HTTP POST
-        return render(request,'scishare/login.html')
+        return render(request,'registration/login.html')
+'''
+
+def register(request):
+    if request.user.is_authenticated:
+        return redirect('scishare:home')
+    else:
+        rform = UserCreateForm()
+
+        if request.method == "POST":
+            rform = UserCreateForm(request.POST)
+            if rform.is_valid():
+                user = rform.save()
+
+                username = rform.cleaned_data.get('username')
+
+                UserProfile.objects.create(user = user)
+                messages.success(request, f'Account created for {user}.')
 
 
+                return redirect('scishare:login')
+
+        context = {'rform':rform}
+        return render(request, 'registration/register.html', context)
+
+def login(request):
+    if request.user.is_authenticated:
+        return redirect('scishare:home')
+    else:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username = username, password = password)
+
+            if user:
+                log_in(request,user)
+                return redirect('scishare:home')
+            else:
+                messages.info(request, 'Username or password incorrect.')
+        else:
+            return render(request,'registration/login.html')
+    
+def logoutUser(request):
+    logout(request)
+    return redirect('scishare:home')
+
+
+def userAccount(request):
+
+    if request.method == 'POST':
+        uform = UserUpdateForm(request.POST, request.FILES, instance = request.user)
+        if uform.is_valid():
+            uform.save()
+    else:
+        uform = UserUpdateForm(instance = request.user)
+            
+    context = {'uform' : uform}
+    return render(request, 'registration/user.html', context)
 
 #following make visible only after log in
 
@@ -162,7 +226,7 @@ def show_category(request, category_name_slug):
 
 @login_required
 def add_study(request, category_name_slug):
-     try:
+    try:
         category = Category.objects.get(slug=category_name_slug)
     except Category.DoesNotExist:
         category = None
