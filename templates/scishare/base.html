@@ -24,6 +24,7 @@
         {% endif %}
     {% endblock %}
 </div>
+<<<<<<< HEAD
 
 <!-- Top navigation -->
 <div class="top">
@@ -42,6 +43,20 @@
 <div class="main">
     {% block body_block %}
         This is body_block's default content.
+=======
+<div>
+    {% block sidebar_block %}
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'scishare:categories' %}">Categories</a></li>
+            <li><a href="{% url 'scishare:most_liked' %}">Most Liked</a></li>
+            <li><a href="{% url 'scishare:userAccount' %}">Account Settings</a></li>
+            <li><a href="{% url 'scishare:logout' %}">Logout</a></li>
+
+        {% else %}
+            <li><a href="{% url 'scishare:register' %}">Sign Up</a></li>
+            <li><a href="{% url 'scishare:login' %}">Login</a></li>
+        {% endif %}
+>>>>>>> 260228545e78f2df3ffa109b57baf880bbe19975
     {% endblock %}
 
 </div>

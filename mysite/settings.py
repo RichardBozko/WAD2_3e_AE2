@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['rbozko.pythonanywhere.com', '127.0.0.1']
 REGISTRATION_OPEN=True
 REGISTRATION_AUTO_LOGIN=True
 LOGIN_REDIRECT_URL='scishare:home'
-LOGIN_URL='auth_login'
+LOGIN_URL='login'
 
 # SMTP email config
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
