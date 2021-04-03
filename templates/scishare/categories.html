@@ -5,10 +5,10 @@
 {% block body_block %}
  <div>
             {% if categories %}
-            <h2>Most Liked Categories</h2>
+            <h2>Categories</h2>
             <ul>
                 {% for category in categories %}
-                    <li>{{ category.name }}</a></li>
+                    <li><a href="{% url 'scishare:show_category' category.slug %}">{{ category.name }}</a></li>
                 {% endfor %}
             </ul>
             {% else %}

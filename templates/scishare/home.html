@@ -2,3 +2,11 @@
 {% block title_block %}
       Homepage
 {% endblock %}
+{% block body_block %}
+      <h1>Welcome to Scishare!</h1>
+      {% if user.is_authenticated %}
+            <div>show search bar</div>
+      {% else %}
+            <div>Register or Log In to view, add and share scientific papers!</div>
+      {% endif %}
+{% endblock %}

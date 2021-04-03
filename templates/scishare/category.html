@@ -1,0 +1,25 @@
+{% extends 'scishare/base.html' %}
+{% block title_block %}
+    {% if category %}
+        {{ category.name }}
+    {% else %}
+        Unknown Category
+    {% endif %}
+{% endblock %}
+{% block body_block %}
+        {% if category %}
+            <h1>{{ category.name }}</h1>
+            {% if studies %}
+            <ul>
+                {% for study in studies %}
+                <li><a href="{{study.url}}">{{ study.title}}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <strong>No studies currently in category.</strong>
+            {% endif %}
+            <a href="{% url 'scishare:add_study' category.slug %}">Add Study</a> <br/>
+        {% else %}
+            The specified category does not exist.
+        {% endif %}
+{% endblock %}

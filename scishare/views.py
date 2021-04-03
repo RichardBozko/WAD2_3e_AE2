@@ -153,7 +153,7 @@ def user_logout(request):
     # Take the user back to the homepage.
     return redirect(reverse('scishare:home'))
 
-@login_required    
+#@login_required
 def search_results(request):
     return HttpResponse("show search results")
 
@@ -165,7 +165,7 @@ def categories(request):
     context_dict['categories'] = obj
     return render(request, 'scishare/categories.html', context=context_dict)
 
-@login_required    
+#@login_required
 def study_list(request, id):
     obj = get_object_or_404(Category, pk = id)
     
@@ -193,7 +193,7 @@ def add_category(request):
     # Render the form with error messages (if any).
     return render(request, 'scishare/add_category.html', {'form': form})
 
-@login_required
+#@login_required
 def show_category(request, category_name_slug):
     # Create a context dictionary which we can pass
     # to the template rendering engine.
@@ -221,7 +221,7 @@ def show_category(request, category_name_slug):
         # Go render the response and return it to the client.
     return render(request, 'scishare/category.html', context=context_dict)
 
-@login_required
+#@login_required
 def add_study(request, category_name_slug):
     try:
         category = Category.objects.get(slug=category_name_slug)
@@ -247,9 +247,9 @@ def add_study(request, category_name_slug):
         else:
             print(form.errors)
     context_dict = {'form': form, 'category': category}
-    return render(request, 'scishare/add_page.html', context=context_dict)
+    return render(request, 'scishare/add_study.html', context=context_dict)
 
-@login_required
+#@login_required
 def most_liked(request):
     study_list = Study.objects.order_by('-up_votes')[:5]
     
@@ -258,13 +258,13 @@ def most_liked(request):
     
     return render (request, 'scishare/most_liked.html', context=context_dict)
 
-@login_required
+#@login_required
 def groups(request):
     obj  = Group.object.all()
     
     return render (request, 'scishare/groups.html', {'obj':obj})
 
-@login_required
+#@login_required
 def create_group(request):
     form = GroupForm()
     # A HTTP POST?
@@ -286,7 +286,7 @@ def create_group(request):
     # Render the form with error messages (if any).
     return render(request, 'scishare/create_group.html', {'form': form})
 
-@login_required
+#@login_required
 def group_list(request, id):
     obj = get_object_or_404(Group, pk = id)
     
