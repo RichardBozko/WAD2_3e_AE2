@@ -17,15 +17,16 @@
 </div>
 <div>
     {% block sidebar_block %}
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'scishare:categories' %}">Categories</a></li>
+            <li><a href="{% url 'scishare:most_liked' %}">Most Liked</a></li>
+            <li><a href="{% url 'scishare:userAccount' %}">Account Settings</a></li>
+            <li><a href="{% url 'scishare:logout' %}">Logout</a></li>
 
-        <li><a href="{% url 'scishare:categories' %}">Categories</a></li>
-        <li><a href="{% url 'scishare:most_liked' %}">Most Liked</a></li>
-        <li><a href="{% url 'scishare:logout' %}">Logout</a></li>
-        <a href = "{% url 'scishare:home' %}">Change password</a></li>
-
-        <li><a href="{% url 'scishare:register' %}">Sign Up</a></li>
-        <li><a href="{% url 'scishare:login' %}">Login</a></li>
-
+        {% else %}
+            <li><a href="{% url 'scishare:register' %}">Sign Up</a></li>
+            <li><a href="{% url 'scishare:login' %}">Login</a></li>
+        {% endif %}
     {% endblock %}
 
 </div>

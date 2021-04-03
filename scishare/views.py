@@ -133,16 +133,18 @@ def login(request):
 
 
 def userAccount(request):
-
-    if request.method == 'POST':
-        uform = UserUpdateForm(request.POST, request.FILES, instance = request.user)
-        if uform.is_valid():
-            uform.save()
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            uform = UserUpdateForm(request.POST, request.FILES, instance = request.user)
+            if uform.is_valid():
+                uform.save()
+        else:
+            uform = UserUpdateForm(instance = request.user)
+                
+        context = {'uform' : uform}
+        return render(request, 'registration/user.html', context)
     else:
-        uform = UserUpdateForm(instance = request.user)
-            
-    context = {'uform' : uform}
-    return render(request, 'registration/user.html', context)
+        return redirect(reverse('scishare:home'))
 
 #following make visible only after log in
 
