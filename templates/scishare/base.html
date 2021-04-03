@@ -1,31 +1,47 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <link rel="stylesheet"  href="{%  static  'css/style.css'  %}">
     <title>
         Scishare -
         {% block title_block %}
-
         {% endblock %}
     </title>
 </head>
+
 <body>
-<div>
-    {% block body_block %}
-        This is body_block's default content.
+{% if user.is_authenticated %}
+<!-- Side navigation -->
+<div class="sidenav">
+    {% block sidebar_block %}
+        <a href="{% url 'scishare:categories' %}">Categories</a>
+        <a href="{% url 'scishare:most_liked' %}">Most Liked</a>
+        <a href="{% url 'scishare:groups' %}">My Groups</a>
+        {% if request.path != "/" %}
+        <a href = "{% url 'scishare:home' %}">Home Page</a>
+        {% endif %}
     {% endblock %}
 </div>
-<div>
-    {% block sidebar_block %}
 
-        <li><a href="{% url 'scishare:categories' %}">Categories</a></li>
-        <li><a href="{% url 'scishare:most_liked' %}">Most Liked</a></li>
-        <li><a href="{% url 'scishare:logout' %}">Logout</a></li>
-        <a href = "{% url 'scishare:home' %}">Change password</a></li>
+<!-- Top navigation -->
+<div class="top">
+    <li><a href="{% url 'scishare:logout' %}">Logout</a></li>
+    <li><a href = "{% url 'scishare:home' %}">Change password</a></li>
+    <li><b>Logged in: {{ user.username }}</b></li>
+</div>
+{% else %}
+<div class="top">
+    <li><a href="{% url 'scishare:register' %}">Sign Up</a></li>
+    <li><a href="{% url 'scishare:login' %}">Login</a></li>
+</div>
+{% endif %}
 
-        <li><a href="{% url 'scishare:register' %}">Sign Up</a></li>
-        <li><a href="{% url 'scishare:login' %}">Login</a></li>
-
+<!-- Page content -->
+<div class="main">
+    {% block body_block %}
+        This is body_block's default content.
     {% endblock %}
 
 </div>

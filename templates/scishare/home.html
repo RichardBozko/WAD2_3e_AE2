@@ -3,10 +3,13 @@
       Homepage
 {% endblock %}
 {% block body_block %}
-      <h1>Welcome to Scishare!</h1>
+<div class="home">
       {% if user.is_authenticated %}
-            <div>show search bar</div>
+            <h1>Scishare!</h1>
+            <div>show search bar - what do you want to research?</div>
       {% else %}
-            <div>Register or Log In to view, add and share scientific papers!</div>
+            <h1>Welcome to Scishare!</h1>
+            <div>Register or Login to view, add and share scientific papers!</div>
       {% endif %}
+</div>
 {% endblock %}

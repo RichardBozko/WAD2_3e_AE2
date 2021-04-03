@@ -18,7 +18,7 @@ urlpatterns = [
     path('groups/', views.groups, name='groups'),
     path('groups/create_group', views.create_group, name='create_group'),
     #path('groups/<group_name>', views.show_group, name='show_group'),
-   # path('reset_password/', auth_views.PasswordResetViews.as_view()),
+    #path('reset_password/', auth_views.PasswordResetViews.as_view()),
     #path('user/<str:pk>/', views.user, name = 'user'),
     path('user/', views.userAccount, name = 'userAccount'),
     path('reset_password/', auth_views.PasswordResetView.as_view(), name = 'reset_password'),
