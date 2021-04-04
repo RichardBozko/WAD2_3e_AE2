@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
 from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as log_in
@@ -12,9 +11,8 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 #from django_email_verification import send_mail
 from django.contrib import messages
-from scishare.models import Category, Study, UserProfile, Order
+from scishare.models import Category, Study, UserProfile
 from django.contrib.auth.decorators import login_required
-from .filters import OrderFilter
 from django.db.models import Q
 
 def home(request):
@@ -148,8 +146,6 @@ def userAccount(request):
     else:
         return redirect(reverse('scishare:home'))
 
-#following make visible only after log in
-
 @login_required
 def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
@@ -163,6 +159,9 @@ def search_results(request):
     if search_study:
         studies = Study.objects.filter(Q(title__icontains=search_study) | Q(category__name__icontains=search_study))
     else:
+        studies = None
+    # if no studies were found
+    if not bool(studies):
         studies = None
 
     context = {'studies': studies, 'search': search_study}

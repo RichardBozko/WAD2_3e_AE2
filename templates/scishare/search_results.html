@@ -14,5 +14,12 @@
 	{% else %}
 		<h2>No search results for {{search}}...</h2>
 	{% endif %}
+    <h3>Another search:</h3>
+    <div>
+        <form action="{% url 'scishare:search_results' %}">
+            <input type="search" placeholder="Search" aria-label="Search" name="search">
+            <button type="submit">Search</button>
+        </form></div>
+    </div>
 </div>
 {% endblock %}
