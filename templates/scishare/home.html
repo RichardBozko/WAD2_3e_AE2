@@ -5,8 +5,31 @@
 {% block body_block %}
 <div class="home">
       {% if user.is_authenticated %}
-            <h1>Scishare!</h1>
-            <div>show search bar - what do you want to research?</div>
+            <h1>Scishare</h1>
+            <div>
+				<form>
+					{{myFilter.form}}
+				
+				<button>Search</button>
+				</form>
+			</div>
+			<div>
+				<table>
+					<tr>
+						<th>Category</th>
+						<th>Study</th>
+					</tr>
+				
+					{% for order in orders %}
+				
+					<tr>
+						<th>order.category</th>
+						<th>order.study</th>
+					</tr>
+					
+					{% endfor %}
+				</table>
+			</div>
       {% else %}
             <h1>Welcome to Scishare!</h1>
             <div>Register or Login to view, add and share scientific papers!</div>

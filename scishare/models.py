@@ -58,5 +58,12 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Order(models.Model):
+    
+    category = models.ForeignKey(Category, null=True, on_delete= models.SET_NULL)
+    study = models.ForeignKey(Study, null=True, on_delete= models.SET_NULL)
+    
+    def __str__(self):
+        return self.study.title
 
 

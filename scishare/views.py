@@ -14,10 +14,19 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from scishare.models import Category, Study, UserProfile
 from django.contrib.auth.decorators import login_required
+from .filters import OrderFilter
 
-def home(request):
-    context_dict = {'boldmessage': 'context dictionary'}
-    return render(request, 'scishare/home.html', context=context_dict)
+def home(request, pk_test):
+    
+    study = Study.objects.get(id=pk_test)
+    orders = Order.objects.all()
+    
+    context = {'study':study, 'myFilter':myFilter, 'orders':orders}
+    
+    myFilter = OrderFilter(request.GET, queryset=orders)
+    orders = myFilter.qs
+    
+    return render(request, 'scishare/home.html', context=context)
 '''
 def register(request):
     #Determines the success status of the registration
