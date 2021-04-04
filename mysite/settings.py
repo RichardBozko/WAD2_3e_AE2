@@ -58,6 +58,8 @@ INSTALLED_APPS = [
     
     'django_email_verification',
     'scishare.apps.ScishareConfig',
+    #install django-filter
+    'django_filters'
 
 ]
 

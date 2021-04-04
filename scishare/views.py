@@ -12,12 +12,22 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 #from django_email_verification import send_mail
 from django.contrib import messages
-from scishare.models import Category, Study, UserProfile
+from scishare.models import Category, Study, UserProfile, Order
 from django.contrib.auth.decorators import login_required
+from .filters import OrderFilter
+from django.db.models import Q
 
 def home(request):
-    context_dict = {'boldmessage': 'context dictionary'}
-    return render(request, 'scishare/home.html', context=context_dict)
+    search_study = request.GET.get('search')
+    if search_study:
+        studies = Study.objects.filter(Q(title__icontains=search_study)| Q(category__name__icontains=search_study))
+    else:
+        # If not searched, return default posts
+        studies = None
+
+    context = {'studies': studies, 'search': search_study}
+    
+    return render(request, 'scishare/home.html', context=context)
 '''
 def register(request):
     #Determines the success status of the registration

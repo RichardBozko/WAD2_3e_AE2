@@ -30,6 +30,9 @@ class Study(models.Model):
     up_votes = models.IntegerField(default=0)
     down_votes = models.IntegerField(default=0)
 
+    class Meta:
+        verbose_name_plural = 'Studies'
+
     def __str__(self):
         return self.title
 
@@ -58,5 +61,12 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Order(models.Model):
+    
+    category = models.ForeignKey(Category, null=True, on_delete= models.SET_NULL)
+    study = models.ForeignKey(Study, null=True, on_delete= models.SET_NULL)
+    
+    def __str__(self):
+        return self.study.title
 
 
