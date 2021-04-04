@@ -16,7 +16,7 @@
       {% if user.is_authenticated %}
             <h1>Scishare</h1>
             <div>
-				<form action="{% url 'home' %}">
+				<form action="{% url 'scishare:search_results' %}">
       				<input type="search" placeholder="Search" aria-label="Search" name="search">
       				<button type="submit">Search</button>
 				</form></div>
