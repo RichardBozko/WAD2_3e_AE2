@@ -92,58 +92,70 @@ def login(request):
 '''
 
 def register(request):
+    # If user is logged-in -> redirect to homepage
     if request.user.is_authenticated:
         return redirect('scishare:home')
     else:
+        # Extract relevant data from relevant type of request
         rform = UserCreateForm()
-
         if request.method == "POST":
             rform = UserCreateForm(request.POST)
             if rform.is_valid():
                 user = rform.save()
 
+                # Construct a user object from provided data
                 username = rform.cleaned_data.get('username')
                 email = rform.cleaned_data.get('email')
                 UserProfile.objects.create(user = user, username = username, email = email)
                 messages.success(request, f'Account created for {user}.')
-
+                # Allow freshly registered user to log in
                 return redirect('scishare:login')
 
-
+    # if GET -> return the page 
     context = {'rform':rform}
     return render(request, 'registration/register.html', context)
 
+
 def login(request):
+    # If user is logged-in -> redirect to homepage
     if request.user.is_authenticated:
         return redirect('scishare:home')
     else:
+        # Extract relevant data from relevant type of request
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
-
+            # Check whether UN+PW combination is valid
             user = authenticate(request, username = username, password = password)
-
             if user:
+                # log the user in if ^ is valid
                 log_in(request,user)
                 return redirect('scishare:home')
             else:
                 messages.info(request, 'Username or password incorrect.')
-        
+                # pass a message to login.html that ^
+    # refresh the page + do ^
     return render(request,'registration/login.html')
     
 
 @login_required
 def userAccount(request):
+    # Check whether there is a user logged in whose account we are to inspect
     if request.user.is_authenticated:
+        # If this is not a refresh following a user info change, 
+        # get the relevant data if the user changed any
         uform = UserUpdateForm(instance = request.user)
         if request.method == 'POST':
+            # if POST (if this is a page refresh following user info changes)
+            # gather data from page request  
             uform = UserUpdateForm(request.POST, request.FILES, instance = request.user.userprofile)
             if uform.is_valid():
                 uform.save()
-             
+                # use this data to update user info
         context = {'uform' : uform}
         return render(request, 'registration/user.html', context)
     else:
+        # If logged in -> redirect to homepage
         return redirect(reverse('scishare:home'))
 
 @login_required
