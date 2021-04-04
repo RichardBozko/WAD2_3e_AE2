@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-
+from django.conf import settings
 
 class Category(models.Model):
     NAME_MAX_LENGTH = 128
@@ -53,11 +53,9 @@ class Group(models.Model):
 
 
 class UserProfile(models.Model):
-
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     username = models.CharField(max_length=50, null=True)
-    #picture = models.ImageField(upload_to = 'profile_images', blank = True)
-    picture = models.ImageField(default = "blank_p_1.jpg", null = True, blank = True)
+    picture = models.ImageField(default = "blank_p_1.jpg", upload_to = 'settings.MEDIA_DIR')
     email = models.CharField(max_length=50, null=True)
 
     def __str__(self):
