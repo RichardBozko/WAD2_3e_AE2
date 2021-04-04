@@ -14,6 +14,7 @@ from django.contrib import messages
 from scishare.models import Category, Study, UserProfile, Group
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from .decorators import user_permissions
 
 def home(request):
     context={}
@@ -180,6 +181,7 @@ def study_list(request, id):
     
     return render(request, 'scishare/study_list.html', {'obj':obj})
 
+@user_permissions()
 @login_required
 def add_category(request):
     form = CategoryForm()
