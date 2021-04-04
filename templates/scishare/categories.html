@@ -5,15 +5,19 @@
 {% block body_block %}
  <div>
             {% if categories %}
-            <h2>Categories</h2>
+            <h2>Categories:</h2>
             <ul>
                 {% for category in categories %}
-                    <li><a href="{% url 'scishare:show_category' category.slug %}">{{ category.name }}</a></li>
+                    <a href="{% url 'scishare:show_category' category.slug %}">{{ category.name }}</a><br>
                 {% endfor %}
             </ul>
             {% else %}
                 <strong>There are no categories present.</strong>
             {% endif %}
-     <a href="{% url 'scishare:add_category' %}">Add a Category</a>
  </div>
+{% endblock %}
+{% block top_block %}
+<div class="top">
+    <li><a href="{% url 'scishare:add_category' %}">Add a Category</a></li>
+</div>
 {% endblock %}
