@@ -8,7 +8,7 @@
             <h2>Groups:</h2>
             <ul>
                 {% for group in groups %}
-                <li>{{ group.group_name }}</li>
+                <li><a href="{% url 'scishare:show_group' group.group_slug %}">{{ group.group_name }}</li>
                 {% endfor %}
             </ul>
             {% else %}

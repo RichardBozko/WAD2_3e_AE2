@@ -17,7 +17,7 @@ urlpatterns = [
     path('most_liked/', views.most_liked, name='most_liked'),
     path('groups/', views.groups, name='groups'),
     path('groups/add_group', views.add_group, name='add_group'),
-    #path('groups/<group_name>', views.show_group, name='show_group'),
+    path('groups/<group_name_slug>', views.show_group, name='show_group'),
     #path('reset_password/', auth_views.PasswordResetViews.as_view()),
     #path('user/<str:pk>/', views.user, name = 'user'),
     path('user/', views.userAccount, name = 'userAccount'),

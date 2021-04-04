@@ -1,0 +1,28 @@
+{% extends 'scishare/base.html' %}
+{% block title_block %}
+    {% if group %}
+        {{ group.group_name }}
+    {% else %}
+        Unknown Group
+    {% endif %}
+{% endblock %}
+{% block body_block %}
+        {% if group %}
+            <h1>{{ group.group_name }}</h1>
+            {% if studies %}
+            {% for s in studies %}
+                {{ s }}
+            {% endfor %}
+            {% else %}
+            <strong>No studies currently in group list.</strong><br>
+            {% endif %}
+            {% if members %}
+            Members:
+            {% for m in members %}
+                {{ m }}<br>
+            {% endfor %}
+            {% endif %}
+        {% else %}
+            The specified group does not exist.
+        {% endif %}
+{% endblock %}

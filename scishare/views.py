@@ -206,7 +206,7 @@ def add_category(request):
             form.save(commit=True)
             # Now that the category is saved, we could confirm this.
             # For now, just redirect the user back to the home page.
-            return redirect('/scishare/')
+            return redirect('/scishare/categories')
         else:
             # The supplied form contained errors -
             # just print them to the terminal.
@@ -299,7 +299,7 @@ def add_group(request):
             form.save(commit=True)
             # Now that the category is saved, we could confirm this.
             # For now, just redirect the user back to the home page.
-            return redirect('/scishare/')
+            return redirect('/scishare/groups')
         else:
             # The supplied form contained errors -
             # just print them to the terminal.
@@ -309,9 +309,27 @@ def add_group(request):
     # Render the form with error messages (if any).
     return render(request, 'scishare/add_group.html', {'form': form})
 
+def show_group(request, group_name_slug):
+    context_dict = {}
+    try:
+        # Can we find a category name slug with the given name?
+        # If we can't, the .get() method raises a DoesNotExist exception.
+        # The .get() method returns one model instance or raises an exception.
+        group = Group.objects.get(group_slug=group_name_slug)
+        context_dict['group'] = group
+        context_dict['studies'] = group.group_studies.all()
+        context_dict['members'] = group.members.all()
+    except Category.DoesNotExist:
+        # We get here if we didn't find the specified category.
+        # Don't do anything -
+        # the template will display the "no category" message for us.
+        context_dict['group'] = None
+        # Go render the response and return it to the client.
+    return render(request, 'scishare/group.html', context=context_dict)
+
 @login_required
-def group_list(request, id):
-    obj = get_object_or_404(Group, pk = id)
+def group_list(request):
+    group_studies = get_object_or_404(Group, pk = id)
     
     return render(request, 'group_list.html', {'obj':obj})
   
