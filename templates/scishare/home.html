@@ -6,8 +6,8 @@
 {% block body_block %}
 <div class="home">
       {% if user.is_authenticated %}
-            <h1>Scishare</h1>
-            <div>
+            <h1>SciShare!</h1>
+            <div> What do you want to research?
 				<form action="{% url 'scishare:search_results' %}">
       				<input type="search" placeholder="Search" aria-label="Search" name="search">
       				<button type="submit">Search</button>
@@ -15,7 +15,7 @@
 			</div>
       {% else %}
             <h1>Welcome to SciShare!</h1>
-            <div>Register or Login to view, add and share scientific papers!</div>
+            <div>Register or Login to view, add and share scientific papers</div>
       {% endif %}
 </div>
 {% endblock %}

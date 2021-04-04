@@ -28,15 +28,20 @@ def add_study(cat, title, url, up_votes=0,down_votes=0):
     p.save()
     return p
 
+
 def add_cat(name):
     c = Category.objects.get_or_create(name=name)[0]
     c.save()
     return c
 
-def add_group(group_name):
+
+def add_group(group_name, members):
     g = Group.objects.get_or_create(group_name=group_name)[0]
+    for member in members:
+        g.members.add(member)
     g.save()
     return g
+
 
 if __name__ == '__main__':
     print('Starting WAD population script...')

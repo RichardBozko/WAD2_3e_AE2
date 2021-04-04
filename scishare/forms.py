@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from scishare.models import Category, Study, UserProfile
+from scishare.models import Category, Study, UserProfile, Group
 from django.contrib.auth.forms import UserCreationForm
 
 class CategoryForm(forms.ModelForm):
@@ -17,8 +17,8 @@ class CategoryForm(forms.ModelForm):
 
 
 class StudyForm(forms.ModelForm):
-	title = forms.CharField(max_length=Study.TITLE_MAX_LENGTH, help_text="Please enter the title of the page.")
-	url = forms.URLField(help_text="Please enter the URL of the page.")
+	title = forms.CharField(max_length=Study.TITLE_MAX_LENGTH, help_text="Please enter the title of the study.")
+	url = forms.URLField(help_text="Please enter the URL of the study.")
 	up_votes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	down_votes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 
@@ -28,6 +28,16 @@ class StudyForm(forms.ModelForm):
 	# not to include foreign key or specify the fields to include fields = ('title', 'url', 'views', )
 
 
+class GroupForm(forms.ModelForm):
+	group_name = forms.CharField(max_length=Group.GROUP_NAME_MAX_LENGTH, help_text="Please enter the name of the group.")
+	members = forms.ModelMultipleChoiceField(
+		queryset=User.objects.all(),
+		widget=forms.CheckboxSelectMultiple
+	)
+
+	class Meta:
+		model = Group
+		fields = ('group_name', 'members')
 
 class UserUpdateForm(forms.ModelForm):
 	class Meta:

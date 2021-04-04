@@ -1,0 +1,23 @@
+{% extends 'scishare/base.html' %}
+{% block title_block %}
+      Groups
+{% endblock %}
+{% block body_block %}
+ <div>
+            {% if groups %}
+            <h2>Groups:</h2>
+            <ul>
+                {% for group in groups %}
+                <li>{{ group.group_name }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>There are no groups present.</strong>
+            {% endif %}
+ </div>
+{% endblock %}
+{% block top_block %}
+<div class="top">
+    <li><a href="{% url 'scishare:add_group' %}">Add a Group</a></li>
+</div>
+{% endblock %}

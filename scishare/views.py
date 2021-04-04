@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
-from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm
+from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm, GroupForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as log_in
 from django.urls import reverse
@@ -11,7 +11,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 #from django_email_verification import send_mail
 from django.contrib import messages
-from scishare.models import Category, Study, UserProfile
+from scishare.models import Category, Study, UserProfile, Group
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 
@@ -268,18 +268,18 @@ def most_liked(request):
     
     return render (request, 'scishare/most_liked.html', context=context_dict)
 
-#@login_required
+@login_required
 def groups(request):
-    obj  = Group.object.all()
-    
-    return render (request, 'scishare/groups.html', {'obj':obj})
+    # select groups the user is a member of
+    my_groups = Group.objects.filter(members=request.user)
+    return render(request, 'scishare/groups.html', {'groups': my_groups})
 
-#@login_required
-def create_group(request):
+@login_required
+def add_group(request):
     form = GroupForm()
     # A HTTP POST?
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form = GroupForm(request.POST)
         # Have we been provided with a valid form?
         if form.is_valid():
             # Save the new category to the database.
@@ -294,9 +294,9 @@ def create_group(request):
     
     # Will handle the bad form, new form, or no form supplied cases.
     # Render the form with error messages (if any).
-    return render(request, 'scishare/create_group.html', {'form': form})
+    return render(request, 'scishare/add_group.html', {'form': form})
 
-#@login_required
+@login_required
 def group_list(request, id):
     obj = get_object_or_404(Group, pk = id)
     

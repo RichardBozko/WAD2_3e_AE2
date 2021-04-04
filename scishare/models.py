@@ -41,6 +41,8 @@ class Group(models.Model):
     GROUP_NAME_MAX_LENGTH = 128
     group_name = models.CharField(max_length=GROUP_NAME_MAX_LENGTH)
     group_slug = models.SlugField(unique=True)
+    members = models.ManyToManyField(User)
+    group_studies = models.ManyToManyField(Study)
 
     def save(self, *args, **kwargs):
         self.group_slug = slugify(self.group_name)
