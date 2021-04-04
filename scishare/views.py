@@ -102,15 +102,15 @@ def register(request):
                 user = rform.save()
 
                 username = rform.cleaned_data.get('username')
-
-                UserProfile.objects.create(user = user)
+                email = rform.cleaned_data.get('email')
+                UserProfile.objects.create(user = user, username = username, email = email)
                 messages.success(request, f'Account created for {user}.')
-
 
                 return redirect('scishare:login')
 
-        context = {'rform':rform}
-        return render(request, 'registration/register.html', context)
+
+    context = {'rform':rform}
+    return render(request, 'registration/register.html', context)
 
 def login(request):
     if request.user.is_authenticated:
@@ -127,20 +127,19 @@ def login(request):
                 return redirect('scishare:home')
             else:
                 messages.info(request, 'Username or password incorrect.')
-        else:
-            return render(request,'registration/login.html')
+        
+    return render(request,'registration/login.html')
     
 
-
+@login_required
 def userAccount(request):
     if request.user.is_authenticated:
+        uform = UserUpdateForm(instance = request.user)
         if request.method == 'POST':
-            uform = UserUpdateForm(request.POST, request.FILES, instance = request.user)
+            uform = UserUpdateForm(request.POST, request.FILES, instance = request.user.userprofile)
             if uform.is_valid():
                 uform.save()
-        else:
-            uform = UserUpdateForm(instance = request.user)
-                
+             
         context = {'uform' : uform}
         return render(request, 'registration/user.html', context)
     else:
