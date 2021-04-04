@@ -18,7 +18,6 @@ from .filters import OrderFilter
 from django.db.models import Q
 
 def home(request):
-
     context={}
     return render(request, 'scishare/home.html', context=context)
 '''
