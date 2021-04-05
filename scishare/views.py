@@ -23,77 +23,7 @@ from .decorators import user_permissions, logged_in_redirect
 def home(request):
     context={}
     return render(request, 'scishare/home.html', context=context)
-'''
-def register(request):
-    #Determines the success status of the registration
-    registered = False
 
-    # Extract relevant data from relevant type of request
-    if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
-
-        # If the above 2 forms are valid
-        if user_form.is_valid() and profile_form.is_valid():
-
-            # Save user form data into database, has PW, save user object
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-
-            profile = profile_form.save(commit = False)
-            profile.user = user
-
-            # Set up the profile pic if the user provided one
-            if 'picture' in request.FILES:
-                profile.pricture=  request.FILES['picture']
-
-            # Save profile and register user 
-            profile.save()
-            registered = True
-        else:
-            # Invalid form(s)
-            print(user_form.errors, profile_form.errors)
-    else:
-        # If not HTTP POST request -> blank forms ready for user input
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-
-
-    return render(request,
-        'registration/registration_complete.html',
-        context = {
-            'user_form': user_form,
-            'profile_form': profile_form,
-            'registered': registered
-        })
-
-def login(request):
-    # Extract relevant data from relevant type of request
-    if request.method=='POST':
-        # Get UN and PW from user login form
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        # Check whether UN+PW combination is valid
-        user = authenticate(username = username, password = password)
-
-        # If UN & PW = OK -> User object (True) othwerwise -> None (False)
-        if user:
-
-            # Is account active (might not keep this block in the final app version)
-            if user.is_active:
-                login(request,user)
-                return redirect(reverse('scishare:home'))
-            else:
-                return HttpResponse("You cannot access your account right now")
-        else:
-            # User object is None -> we got faulty details
-            print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
-    else:
-        # We did not arrive ehre via a HTTP POST
-        return render(request,'registration/login.html')
-'''
 @logged_in_redirect
 def register(request):
     # If user is logged-in -> redirect to homepage
