@@ -14,7 +14,7 @@ from django.contrib import messages
 from scishare.models import Category, Study, UserProfile, Group
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from .decorators import user_permissions
+from .decorators import user_permissions, logged_in_redirect
 
 def home(request):
     context={}
@@ -90,50 +90,44 @@ def login(request):
         # We did not arrive ehre via a HTTP POST
         return render(request,'registration/login.html')
 '''
-
+@logged_in_redirect
 def register(request):
     # If user is logged-in -> redirect to homepage
-    if request.user.is_authenticated:
-        return redirect('scishare:home')
-    else:
-        # Extract relevant data from relevant type of request
-        rform = UserCreateForm()
-        if request.method == "POST":
-            rform = UserCreateForm(request.POST)
-            if rform.is_valid():
-                user = rform.save()
+    # Extract relevant data from relevant type of request
+    rform = UserCreateForm()
+    if request.method == "POST":
+        rform = UserCreateForm(request.POST)
+        if rform.is_valid():
+            user = rform.save()
 
-                # Construct a user object from provided data
-                username = rform.cleaned_data.get('username')
-                email = rform.cleaned_data.get('email')
-                UserProfile.objects.create(user = user, username = username, email = email)
-                messages.success(request, f'Account created for {user}.')
-                # Allow freshly registered user to log in
-                return redirect('scishare:login')
+            # Construct a user object from provided data
+            username = rform.cleaned_data.get('username')
+            email = rform.cleaned_data.get('email')
+            UserProfile.objects.create(user = user, username = username, email = email)
+            messages.success(request, f'Account created for {user}.')
+            # Allow freshly registered user to log in
+            return redirect('scishare:login')
 
-    # if GET -> return the page 
+# if GET -> return the page 
     context = {'rform':rform}
     return render(request, 'registration/register.html', context)
 
-
+@logged_in_redirect
 def login(request):
     # If user is logged-in -> redirect to homepage
-    if request.user.is_authenticated:
-        return redirect('scishare:home')
-    else:
-        # Extract relevant data from relevant type of request
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            # Check whether UN+PW combination is valid
-            user = authenticate(request, username = username, password = password)
-            if user:
-                # log the user in if ^ is valid
-                log_in(request,user)
-                return redirect('scishare:home')
-            else:
-                messages.info(request, 'Username or password incorrect.')
-                # pass a message to login.html that ^
+    # Extract relevant data from relevant type of request
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # Check whether UN+PW combination is valid
+        user = authenticate(request, username = username, password = password)
+        if user:
+            # log the user in if ^ is valid
+            log_in(request,user)
+            return redirect('scishare:home')
+        else:
+            messages.info(request, 'Username or password incorrect.')
+            # pass a message to login.html that ^
     # refresh the page + do ^
     return render(request,'registration/login.html')
     
