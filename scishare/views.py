@@ -2,7 +2,9 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse,JsonResponse
-from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm
+#from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm
+from django.shortcuts import render, get_object_or_404, HttpResponse
+from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm, GroupForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as log_in
 from django.urls import reverse
@@ -13,9 +15,10 @@ from django.contrib.auth.forms import UserCreationForm
 #from django_email_verification import send_mail
 from django.contrib import messages
 from scishare.models import Category, Study, UserProfile, Order,Group
+#from scishare.models import Category, Study, UserProfile, Group
 from django.contrib.auth.decorators import login_required
-from .filters import OrderFilter
 from django.db.models import Q
+from .decorators import user_permissions, logged_in_redirect
 
 def home(request):
     context={}
@@ -91,64 +94,67 @@ def login(request):
         # We did not arrive ehre via a HTTP POST
         return render(request,'registration/login.html')
 '''
-
+@logged_in_redirect
 def register(request):
-    if request.user.is_authenticated:
-        return redirect('scishare:home')
-    else:
-        rform = UserCreateForm()
+    # If user is logged-in -> redirect to homepage
+    # Extract relevant data from relevant type of request
+    rform = UserCreateForm()
+    if request.method == "POST":
+        rform = UserCreateForm(request.POST)
+        if rform.is_valid():
+            user = rform.save()
 
-        if request.method == "POST":
-            rform = UserCreateForm(request.POST)
-            if rform.is_valid():
-                user = rform.save()
+            # Construct a user object from provided data
+            username = rform.cleaned_data.get('username')
+            email = rform.cleaned_data.get('email')
+            UserProfile.objects.create(user = user, username = username, email = email)
+            messages.success(request, f'Account created for {user}.')
+            # Allow freshly registered user to log in
+            return redirect('scishare:login')
 
-                username = rform.cleaned_data.get('username')
+# if GET -> return the page 
+    context = {'rform':rform}
+    return render(request, 'registration/register.html', context)
 
-                UserProfile.objects.create(user = user)
-                messages.success(request, f'Account created for {user}.')
-
-
-                return redirect('scishare:login')
-
-        context = {'rform':rform}
-        return render(request, 'registration/register.html', context)
-
+@logged_in_redirect
 def login(request):
-    if request.user.is_authenticated:
-        return redirect('scishare:home')
-    else:
-        if request.method == 'POST':
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-
-            user = authenticate(request, username = username, password = password)
-
-            if user:
-                log_in(request,user)
-                return redirect('scishare:home')
-            else:
-                messages.info(request, 'Username or password incorrect.')
+    # If user is logged-in -> redirect to homepage
+    # Extract relevant data from relevant type of request
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        # Check whether UN+PW combination is valid
+        user = authenticate(request, username = username, password = password)
+        if user:
+            # log the user in if ^ is valid
+            log_in(request,user)
+            return redirect('scishare:home')
         else:
-            return render(request,'registration/login.html')
+            messages.info(request, 'Username or password incorrect.')
+            # pass a message to login.html that ^
+    # refresh the page + do ^
+    return render(request,'registration/login.html')
     
 
-
+@login_required
 def userAccount(request):
+    # Check whether there is a user logged in whose account we are to inspect
     if request.user.is_authenticated:
+        # If this is not a refresh following a user info change, 
+        # get the relevant data if the user changed any
+        uform = UserUpdateForm(instance = request.user)
         if request.method == 'POST':
-            uform = UserUpdateForm(request.POST, request.FILES, instance = request.user)
+            # if POST (if this is a page refresh following user info changes)
+            # gather data from page request  
+            uform = UserUpdateForm(request.POST, request.FILES, instance = request.user.userprofile)
             if uform.is_valid():
                 uform.save()
-        else:
-            uform = UserUpdateForm(instance = request.user)
-                
+                # use this data to update user info
         context = {'uform' : uform}
         return render(request, 'registration/user.html', context)
     else:
+        # If logged in -> redirect to homepage
         return redirect(reverse('scishare:home'))
-
-#following make visible only after log in
 
 @login_required
 def user_logout(request):
@@ -163,6 +169,9 @@ def search_results(request):
     if search_study:
         studies = Study.objects.filter(Q(title__icontains=search_study) | Q(category__name__icontains=search_study))
     else:
+        studies = None
+    # if no studies were found
+    if not bool(studies):
         studies = None
 
     context = {'studies': studies, 'search': search_study}
@@ -195,12 +204,7 @@ def categories(request):
     context_dict['categories'] = obj
     return render(request, 'scishare/categories.html', context=context_dict)
 
-#@login_required
-def study_list(request, id):
-    obj = get_object_or_404(Category, pk = id)
-    
-    return render(request, 'scishare/study_list.html', {'obj':obj})
-
+@user_permissions()
 @login_required
 def add_category(request):
     form = CategoryForm()
@@ -213,7 +217,7 @@ def add_category(request):
             form.save(commit=True)
             # Now that the category is saved, we could confirm this.
             # For now, just redirect the user back to the home page.
-            return redirect('/scishare/')
+            return redirect('/scishare/categories')
         else:
             # The supplied form contained errors -
             # just print them to the terminal.
@@ -288,25 +292,25 @@ def most_liked(request):
     
     return render (request, 'scishare/most_liked.html', context=context_dict)
 
-#@login_required
+@login_required
 def groups(request):
-    obj  = Group.object.all()
-    
-    return render (request, 'scishare/groups.html', {'obj':obj})
+    # select groups the user is a member of
+    my_groups = Group.objects.filter(members=request.user)
+    return render(request, 'scishare/groups.html', {'groups': my_groups})
 
-#@login_required
-def create_group(request):
+@login_required
+def add_group(request):
     form = GroupForm()
     # A HTTP POST?
     if request.method == 'POST':
-        form = CategoryForm(request.POST)
+        form = GroupForm(request.POST)
         # Have we been provided with a valid form?
         if form.is_valid():
             # Save the new category to the database.
             form.save(commit=True)
             # Now that the category is saved, we could confirm this.
             # For now, just redirect the user back to the home page.
-            return redirect('/scishare/')
+            return redirect('/scishare/groups')
         else:
             # The supplied form contained errors -
             # just print them to the terminal.
@@ -314,13 +318,45 @@ def create_group(request):
     
     # Will handle the bad form, new form, or no form supplied cases.
     # Render the form with error messages (if any).
-    return render(request, 'scishare/create_group.html', {'form': form})
+    return render(request, 'scishare/add_group.html', {'form': form})
 
-#@login_required
-def group_list(request, id):
-    obj = get_object_or_404(Group, pk = id)
-    
-    return render(request, 'group_list.html', {'obj':obj})
+@login_required
+def show_group(request, group_name_slug):
+    context_dict = {}
+    try:
+        group = Group.objects.get(group_slug=group_name_slug)
+        context_dict['group'] = group
+        context_dict['studies'] = group.group_studies.all()
+        context_dict['members'] = group.members.all()
+    except Group.DoesNotExist:
+        context_dict['group'] = None
+        # Go render the response and return it to the client.
+    return render(request, 'scishare/group.html', context=context_dict)
+
+@login_required
+def add_study_to_group(request):
+    context_dict = {}
+    selected_study = Study.objects.get(id=request.GET.get('study'))
+    my_groups = Group.objects.filter(members=request.user)
+    context_dict['studies'] = selected_study
+    context_dict['my_groups'] = my_groups
+    return render(request, 'scishare/add_study_to_group.html', context=context_dict)
+
+
+@login_required
+def add_selected_study_to_group(request):
+    context_dict = {}
+    if request.method == 'POST':
+        groups = request.POST.getlist('groups')
+        study_id = request.POST.get('study')
+        selected_study = Study.objects.get(id=study_id)
+        context_dict['my_groups'] = []
+        for g in groups:
+            group = Group.objects.get(group_slug=g)
+            group.group_studies.add(selected_study)
+            context_dict['my_groups'].append(group)
+        context_dict['study'] = selected_study
+        return render(request, 'scishare/successfully_added.html', context=context_dict)
   
 
 

@@ -19,7 +19,7 @@
         <a href="{% url 'scishare:categories' %}">Categories</a>
         <a href="{% url 'scishare:most_liked' %}">Most Liked</a>
         <a href="{% url 'scishare:groups' %}">My Groups</a>
-        {% if request.path != "/scishare/" %}
+        {% if request.path != "/scishare/"%}
         <a href = "{% url 'scishare:home' %}">Home Page</a>
         {% endif %}
     {% endblock %}
@@ -28,7 +28,7 @@
 <!-- Top navigation -->
 {% block top_block %}
 {% if user.is_authenticated %}
-    {% if request.path == "/scishare/" %}
+    {% if request.path == "/scishare/" or request.path == "/"%}
 <div class="top">
     <li><a href="{% url 'scishare:logout' %}">Logout</a></li>
     <li><a href="{% url 'scishare:userAccount' %}">Account Settings</a></li>

@@ -22,8 +22,6 @@
 </form>
 <li><a href="{% url 'scishare:password_reset' %}">Reset Password</a></li>
 <br/>
-<img class="pic" src="{{request.UserProfile.user.picture.url}}" >
-
-
+<img class="pic" src="{{ request.user.userprofile.picture.url }}" >
 
 {% endblock %}

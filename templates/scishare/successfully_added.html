@@ -1,0 +1,12 @@
+{% extends 'scishare/base.html' %}
+{% block title_block %}
+      Successfully Added
+{% endblock %}
+
+{% block body_block %}
+<h3>Successfully added {{ study }} to groups:
+{% for group in my_groups %}
+{{ group }}
+{% endfor %}
+</h3>
+{% endblock %}
