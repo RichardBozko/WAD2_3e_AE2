@@ -1,18 +1,41 @@
 {% extends 'scishare/base.html' %}
+{% load static %}
 {% block title_block %}
       Search results
 {% endblock %}
 
 {% block body_block %}
+    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}" >
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	{% if studies != None %}
 		<div class = "search_results">
 			<h2>Search results for {{search}}...</h2>
 			{% for study in studies %}
-			<li><a href="{{study.url}}">{{ study.title}}</a></li>
+			<li>
+
+                <a href="{{study.url}}">{{ study.title}}</a>
+                 <button class="btn btn-primary" id="{{ study.id }}" method="voted"><i class="fa fa-thumbs-o-up"></i>&nbsp;&nbsp;liked</button>
+                 <button class="btn btn-primary" id="{{ study.id }}" method="unvoted"><i class="fa fa-thumbs-o-down"></i>&nbsp;&nbsp;Don't like</button>
+
+            </li>
     		{% endfor %}
 		</div>
 	{% else %}
 		<h2>No search results for {{search}}...</h2>
 	{% endif %}
+    <script src="{% static 'layer/layer.js' %}"></script>
+    <script>
+      $(function () {
+          $('.btn').click(function () {
+              var id=$(this).attr('id')
+              var  method=$(this).attr('method')
+              $.post('/scishare/vote/'+id+"/"+method+"/",function (data) {
+                 layer.alert(data["msg"], {icon: 6,title:'Information',btn:'Confirm'});
+              })
+          })
+      })
+
+    </script>
 </div>
 {% endblock %}

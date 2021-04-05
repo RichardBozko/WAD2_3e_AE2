@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as log_in
@@ -12,7 +12,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 #from django_email_verification import send_mail
 from django.contrib import messages
-from scishare.models import Category, Study, UserProfile, Order
+from scishare.models import Category, Study, UserProfile, Order,Group
 from django.contrib.auth.decorators import login_required
 from .filters import OrderFilter
 from django.db.models import Q
@@ -167,6 +167,25 @@ def search_results(request):
 
     context = {'studies': studies, 'search': search_study}
     return render(request, 'scishare/search_results.html', context=context)
+
+@login_required
+def vote(request,id,method):
+    if request.method=="POST":
+      try:
+       study_obj=Study.objects.get(id=id)
+       if method=="voted":
+           study_obj.up_votes=study_obj.up_votes+1
+       else:
+           study_obj.down_votes=study_obj.down_votes+1
+       study_obj.save()
+       return JsonResponse({"code":200,"msg":"Successful！"})
+      except:
+          return JsonResponse({"code": 200, "msg": "Failed"})
+
+
+
+
+
 
 @login_required
 def categories(request):
