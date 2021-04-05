@@ -5,7 +5,17 @@ from django.test import TestCase
 import os
 from django.urls import reverse
 from django.conf import settings
-#from scishare.models import home
+from scishare.models import Category
+
+
+class TestScishareModels(TestCase):
+	def test_category_str(self):
+		name = Category.objects.create(name = "Biology")
+		self.assertEqual(str(name), "Biology")
+
+
+
+
 
 '''
 class URLTests(TestCase):
