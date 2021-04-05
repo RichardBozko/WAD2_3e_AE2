@@ -5,7 +5,7 @@ from django.test import TestCase
 import os
 from django.urls import reverse
 from django.conf import settings
-from scishare.models import home
+#from scishare.models import home
 
 '''
 class URLTests(TestCase):
