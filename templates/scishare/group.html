@@ -10,8 +10,9 @@
         {% if group %}
             <h1>{{ group.group_name }}</h1>
             {% if studies %}
+            <strong>Studies in the list: </strong>
             {% for s in studies %}
-                <a href="{{s.url}}">{{ s.title }}</a><br>
+                <li><a href="{{s.url}}">{{ s.title }}</a></li>
             {% endfor %}
             {% else %}
             <strong>No studies currently in group list.</strong><br>
@@ -19,7 +20,7 @@
             {% if members %}
             Members:
             {% for m in members %}
-                {{ m }}<br>
+            <li>{{ m }}</li>
             {% endfor %}
             {% endif %}
         {% else %}

@@ -187,13 +187,7 @@ def categories(request):
     context_dict['categories'] = obj
     return render(request, 'scishare/categories.html', context=context_dict)
 
-#@login_required
-def study_list(request, id):
-    obj = get_object_or_404(Category, pk = id)
-    
-    return render(request, 'scishare/study_list.html', {'obj':obj})
-
-#@user_permissions()
+@user_permissions()
 @login_required
 def add_category(request):
     form = CategoryForm()
@@ -322,7 +316,7 @@ def show_group(request, group_name_slug):
         # Go render the response and return it to the client.
     return render(request, 'scishare/group.html', context=context_dict)
 
-
+@login_required
 def add_study_to_group(request):
     context_dict = {}
     selected_study = Study.objects.get(id=request.GET.get('study'))
@@ -332,23 +326,20 @@ def add_study_to_group(request):
     return render(request, 'scishare/add_study_to_group.html', context=context_dict)
 
 
-
+@login_required
 def add_selected_study_to_group(request):
+    context_dict = {}
     if request.method == 'POST':
         groups = request.POST.getlist('groups')
         study_id = request.POST.get('study')
         selected_study = Study.objects.get(id=study_id)
+        context_dict['my_groups'] = []
         for g in groups:
             group = Group.objects.get(group_slug=g)
             group.group_studies.add(selected_study)
-        return HttpResponse("Study Added")
-
-
-@login_required
-def group_list(request):
-    group_studies = get_object_or_404(Group, pk = id)
-    
-    return render(request, 'group_list.html', {'obj':obj})
+            context_dict['my_groups'].append(group)
+        context_dict['study'] = selected_study
+        return render(request, 'scishare/successfully_added.html', context=context_dict)
   
 
 
