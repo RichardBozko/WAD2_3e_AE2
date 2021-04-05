@@ -14,7 +14,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.forms import UserCreationForm
 #from django_email_verification import send_mail
 from django.contrib import messages
-from scishare.models import Category, Study, UserProfile, Order,Group
+from scishare.models import Category, Study, UserProfile, Group #Order 
 #from scishare.models import Category, Study, UserProfile, Group
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q

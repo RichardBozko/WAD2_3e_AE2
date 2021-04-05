@@ -107,8 +107,8 @@
     <p id="t53" class="pln"><span class="n"><a href="#t53">53</a></span><span class="t">    <span class="str">'django.contrib.sessions'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t54" class="pln"><span class="n"><a href="#t54">54</a></span><span class="t">    <span class="str">'django.contrib.messages'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t55" class="pln"><span class="n"><a href="#t55">55</a></span><span class="t">    <span class="str">'django.contrib.staticfiles'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t56" class="pln"><span class="n"><a href="#t56">56</a></span><span class="t">    <span class="com">#'scishare',</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t57" class="pln"><span class="n"><a href="#t57">57</a></span><span class="t">    <span class="str">'registration'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t56" class="pln"><span class="n"><a href="#t56">56</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t57" class="pln"><span class="n"><a href="#t57">57</a></span><span class="t">    <span class="com"># 'registration',</span>&nbsp;</span><span class="r"></span></p>
     <p id="t58" class="pln"><span class="n"><a href="#t58">58</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t59" class="pln"><span class="n"><a href="#t59">59</a></span><span class="t">    <span class="str">'django_email_verification'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t60" class="pln"><span class="n"><a href="#t60">60</a></span><span class="t">    <span class="str">'scishare.apps.ScishareConfig'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -130,7 +130,7 @@
     <p id="t76" class="pln"><span class="n"><a href="#t76">76</a></span><span class="t">    <span class="str">'django.middleware.security.SecurityMiddleware'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t77" class="pln"><span class="n"><a href="#t77">77</a></span><span class="t">    <span class="str">'django.contrib.sessions.middleware.SessionMiddleware'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t78" class="pln"><span class="n"><a href="#t78">78</a></span><span class="t">    <span class="str">'django.middleware.common.CommonMiddleware'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t79" class="pln"><span class="n"><a href="#t79">79</a></span><span class="t">    <span class="str">'django.middleware.csrf.CsrfViewMiddleware'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t79" class="pln"><span class="n"><a href="#t79">79</a></span><span class="t">   <span class="com"># 'django.middleware.csrf.CsrfViewMiddleware',</span>&nbsp;</span><span class="r"></span></p>
     <p id="t80" class="pln"><span class="n"><a href="#t80">80</a></span><span class="t">    <span class="str">'django.contrib.auth.middleware.AuthenticationMiddleware'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t81" class="pln"><span class="n"><a href="#t81">81</a></span><span class="t">    <span class="str">'django.contrib.messages.middleware.MessageMiddleware'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t82" class="pln"><span class="n"><a href="#t82">82</a></span><span class="t">    <span class="str">'django.middleware.clickjacking.XFrameOptionsMiddleware'</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -212,13 +212,14 @@
     <p id="t158" class="pln"><span class="n"><a href="#t158">158</a></span><span class="t"><span class="com"># https://docs.djangoproject.com/en/2.2/howto/static-files/</span>&nbsp;</span><span class="r"></span></p>
     <p id="t159" class="pln"><span class="n"><a href="#t159">159</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t160" class="run"><span class="n"><a href="#t160">160</a></span><span class="t"><span class="nam">STATIC_URL</span> <span class="op">=</span> <span class="str">'/static/'</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t161" class="run"><span class="n"><a href="#t161">161</a></span><span class="t"><span class="nam">STATIC_ROOT</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">join</span><span class="op">(</span><span class="nam">BASE_DIR</span><span class="op">,</span>  <span class="str">'static'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t161" class="pln"><span class="n"><a href="#t161">161</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t162" class="run"><span class="n"><a href="#t162">162</a></span><span class="t"><span class="nam">STATICFILES_DIRS</span> <span class="op">=</span> <span class="op">[</span><span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">join</span><span class="op">(</span><span class="nam">BASE_DIR</span><span class="op">,</span> <span class="str">'static'</span><span class="op">)</span><span class="op">,</span> <span class="op">]</span>&nbsp;</span><span class="r"></span></p>
 </div>
 <div id="footer">
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-04-05 14:20 +0100
+            created at 2021-04-05 20:57 +0100
         </p>
     </div>
 </div>

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
-import os
 from django.urls import reverse, resolve
 from scishare.views import *
 

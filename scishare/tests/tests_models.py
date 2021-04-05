@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+#from __future__ import unicode_literals
 from django.db import models
 from django.test import TestCase
-import os
-from django.urls import reverse
-from django.conf import settings
 from scishare.models import Category, Study, UserProfile, Group
 from django.contrib.auth.models import User
 
