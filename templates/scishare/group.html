@@ -11,7 +11,7 @@
             <h1>{{ group.group_name }}</h1>
             {% if studies %}
             {% for s in studies %}
-                {{ s }}
+                <a href="{{s.url}}">{{ s.title }}</a><br>
             {% endfor %}
             {% else %}
             <strong>No studies currently in group list.</strong><br>

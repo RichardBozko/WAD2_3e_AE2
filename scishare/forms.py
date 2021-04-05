@@ -21,10 +21,11 @@ class StudyForm(forms.ModelForm):
 	url = forms.URLField(help_text="Please enter the URL of the study.")
 	up_votes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	down_votes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+	study_slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
 	class Meta:
 		model = Study
-		exclude = ('category', )
+		exclude = ('category', 'study_slug', )
 	# not to include foreign key or specify the fields to include fields = ('title', 'url', 'views', )
 
 
@@ -32,8 +33,10 @@ class GroupForm(forms.ModelForm):
 	group_name = forms.CharField(max_length=Group.GROUP_NAME_MAX_LENGTH, help_text="Please enter the name of the group.")
 	members = forms.ModelMultipleChoiceField(
 		queryset=User.objects.all(),
-		widget=forms.CheckboxSelectMultiple
+		widget=forms.CheckboxSelectMultiple,
+		help_text="Members of the group: "
 	)
+	group_slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
 	class Meta:
 		model = Group

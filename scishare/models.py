@@ -27,8 +27,13 @@ class Study(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=TITLE_MAX_LENGTH)
     url = models.URLField()
+    study_slug = models.SlugField(unique=True)
     up_votes = models.IntegerField(default=0)
     down_votes = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        self.study_slug = slugify(self.title)
+        super(Study, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Studies'

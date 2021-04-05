@@ -1,0 +1,20 @@
+{% extends 'scishare/base.html' %}
+{% block title_block %}
+      Add Study to a Group
+{% endblock %}
+
+{% block body_block %}
+    <h2>Add study {{ studies }} to group: </h2>
+
+    <form method="post" action="{% url 'scishare:add_selected_study_to_group' %}">
+        {% csrf_token %}
+        {% for group in my_groups %}
+        <input type="checkbox" id={{group.id}} name="groups" value={{group.group_slug}}>
+        <label for={{ group }}> {{group.group_name}}</label><br>
+        {% endfor %}
+        <input type="hidden"
+            	name="study" value = {{ studies.id }}>
+        <input type="submit" value="Add Study">
+    </form>
+
+{% endblock %}

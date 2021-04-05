@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from scishare.forms import UserCreateForm, UserUpdateForm, CategoryForm, StudyForm, GroupForm
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as log_in
@@ -193,7 +193,7 @@ def study_list(request, id):
     
     return render(request, 'scishare/study_list.html', {'obj':obj})
 
-@user_permissions()
+#@user_permissions()
 @login_required
 def add_category(request):
     form = CategoryForm()
@@ -309,23 +309,40 @@ def add_group(request):
     # Render the form with error messages (if any).
     return render(request, 'scishare/add_group.html', {'form': form})
 
+@login_required
 def show_group(request, group_name_slug):
     context_dict = {}
     try:
-        # Can we find a category name slug with the given name?
-        # If we can't, the .get() method raises a DoesNotExist exception.
-        # The .get() method returns one model instance or raises an exception.
         group = Group.objects.get(group_slug=group_name_slug)
         context_dict['group'] = group
         context_dict['studies'] = group.group_studies.all()
         context_dict['members'] = group.members.all()
-    except Category.DoesNotExist:
-        # We get here if we didn't find the specified category.
-        # Don't do anything -
-        # the template will display the "no category" message for us.
+    except Group.DoesNotExist:
         context_dict['group'] = None
         # Go render the response and return it to the client.
     return render(request, 'scishare/group.html', context=context_dict)
+
+
+def add_study_to_group(request):
+    context_dict = {}
+    selected_study = Study.objects.get(id=request.GET.get('study'))
+    my_groups = Group.objects.filter(members=request.user)
+    context_dict['studies'] = selected_study
+    context_dict['my_groups'] = my_groups
+    return render(request, 'scishare/add_study_to_group.html', context=context_dict)
+
+
+
+def add_selected_study_to_group(request):
+    if request.method == 'POST':
+        groups = request.POST.getlist('groups')
+        study_id = request.POST.get('study')
+        selected_study = Study.objects.get(id=study_id)
+        for g in groups:
+            group = Group.objects.get(group_slug=g)
+            group.group_studies.add(selected_study)
+        return HttpResponse("Study Added")
+
 
 @login_required
 def group_list(request):
