@@ -13,8 +13,8 @@
             <ul>
                 {% for study in studies %}
                 <a href="{{study.url}}">{{ study.title}}</a>
-                up votes: {{ study.up_votes}}
-                down votes: {{ study.up_votes}}<br>
+                <p>Up votes: {{ study.up_votes}}<br>
+                    Down votes: {{ study.up_votes}}<br></p>
                 <form action="{% url 'scishare:add_study_to_group' %}">
      		    <input type="hidden"
             	    name="study" value = {{ study.id }}>
@@ -26,10 +26,10 @@
                 {% endfor %}
             </ul>
             {% else %}
-            <strong>No studies currently in category.</strong>
+            <h2><strong>There are no studies present.</strong></h2>
             {% endif %}
         {% else %}
-            The specified category does not exist.
+            <h2><strong>The specified category does not exist.</strong></h2>
         {% endif %}
 
 {% endblock %}

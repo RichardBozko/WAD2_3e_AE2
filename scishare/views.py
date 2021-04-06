@@ -134,7 +134,7 @@ def categories(request):
     context_dict['categories'] = obj
     return render(request, 'scishare/categories.html', context=context_dict)
 
-@user_permissions()
+#@user_permissions()
 @login_required
 def add_category(request):
     form = CategoryForm()

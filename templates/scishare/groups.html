@@ -5,14 +5,14 @@
 {% block body_block %}
  <div>
             {% if groups %}
-            <h2>Groups:</h2>
+            <h2>My Groups:</h2>
             <ul>
                 {% for group in groups %}
                 <li><a href="{% url 'scishare:show_group' group.group_slug %}">{{ group.group_name }}</li>
                 {% endfor %}
             </ul>
             {% else %}
-                <strong>There are no groups present.</strong>
+            <h2><strong>There are no groups present.</strong></h2>
             {% endif %}
  </div>
 {% endblock %}

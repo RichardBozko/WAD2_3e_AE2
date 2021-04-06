@@ -4,7 +4,7 @@ from scishare.models import Category, Study, UserProfile, Group
 from django.contrib.auth.forms import UserCreationForm
 
 class CategoryForm(forms.ModelForm):
-	name = forms.CharField(max_length=Category.NAME_MAX_LENGTH, help_text="Please enter the category name.")
+	name = forms.CharField(max_length=Category.NAME_MAX_LENGTH, help_text="Please enter the category name:")
 	views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	slug = forms.CharField(widget=forms.HiddenInput(), required=False)
@@ -17,8 +17,8 @@ class CategoryForm(forms.ModelForm):
 
 
 class StudyForm(forms.ModelForm):
-	title = forms.CharField(max_length=Study.TITLE_MAX_LENGTH, help_text="Please enter the title of the study.")
-	url = forms.URLField(help_text="Please enter the URL of the study.")
+	title = forms.CharField(max_length=Study.TITLE_MAX_LENGTH, help_text="Please enter the title of the study:")
+	url = forms.URLField(help_text="Please enter the URL of the study:")
 	up_votes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	down_votes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	study_slug = forms.CharField(widget=forms.HiddenInput(), required=False)
@@ -30,7 +30,7 @@ class StudyForm(forms.ModelForm):
 
 
 class GroupForm(forms.ModelForm):
-	group_name = forms.CharField(max_length=Group.GROUP_NAME_MAX_LENGTH, help_text="Please enter the name of the group.")
+	group_name = forms.CharField(max_length=Group.GROUP_NAME_MAX_LENGTH, help_text="Please enter the name of the group:")
 	members = forms.ModelMultipleChoiceField(
 		queryset=User.objects.all(),
 		widget=forms.CheckboxSelectMultiple,
