@@ -65,10 +65,13 @@ class TestViews(TestCase):
 		self.assertEquals(response.status_code, 200)
 		self.assertTemplateUsed(response, 'registration/login.html')
 
+
+	# This one's a 'catchall' of sorts as I was running out of time
 	# Check whether POST to register results in a functional user
 	# *IF* a viable form is supplied
 	# Also tests login
 	# Also that the user gets authenticated automatically
+	# Also that their profile can be updated
 	def test_register_POST_good(self):
 		u_data = {'username': 'Ford_Prefect', 
 		 'password1': 'beetlejuice42',
@@ -82,6 +85,29 @@ class TestViews(TestCase):
 		self.assertTrue(User.objects.get(email = "FP@gmail.com"))
 		self.assertTrue(self.client.login(username='Ford_Prefect', password='beetlejuice42'))
 		self.assertTrue(actual_user.is_authenticated)	
+
+		up = UserProfile.objects.create(
+			user = actual_user,
+			username = 'Ford_Prefect',
+			email = "FP@gmail.com",
+
+
+			)
+
+		update_form = UserUpdateForm(
+
+			{
+			'username': 'maybe',
+			'email': 'can@gmail.com',
+			'picture': 'blank_p_1.jpg'
+
+			}
+
+
+			)
+		self.assertTrue(update_form.is_valid())
+		response = self.clinet.post(update_form)
+		self.assertTrue(response.status_code, 200)
 
 	# Check whether errors happen if empty form is supplied
 	def test_register_POST_bad(self):
@@ -102,11 +128,15 @@ class TestViews(TestCase):
 		content = response.content.decode('utf-8')
 		self.assertTrue('incorrect' in content)
 
-
+	# Test user account works
 	def test_user_account(self):
-		
+		response = self.client.get(self.user_url)
+		self.assertEquals(response.status_code, 302)
+		self.assertEquals(response.url, "/accounts/login/?next=/scishare/user/")
 
 
+	def test_login_f(self):
+		response = self.client.post("scishare:login")
 
 
 
