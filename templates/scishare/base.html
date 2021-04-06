@@ -3,7 +3,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet"  href="{%  static  'css/style.css'  %}">
+    {% block link %}
+    <link rel="stylesheet"  href="{%  static  'css/style1.css'  %}">
+    {% endblock %}
     <title>
         SciShare -
         {% block title_block %}
@@ -44,7 +46,7 @@
 {% endblock %}
 
 <!-- Page content -->
-<div class = "main">
+<div class="main">
     {% block body_block %}
         This is body_block's default content.
     {% endblock %}

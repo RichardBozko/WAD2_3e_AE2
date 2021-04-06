@@ -1,4 +1,6 @@
 {% extends 'scishare/base.html' %}
+
+
 {% block title_block %}
       Homepage
 {% endblock %}
@@ -7,7 +9,7 @@
 <div class="home">
       {% if user.is_authenticated %}
             <h1>SciShare!</h1>
-            <div> What do you want to research?
+            <div class = "searchbar"> What do you want to research?
 				<form action="{% url 'scishare:search_results' %}">
       				<input type="search" placeholder="Search" aria-label="Search" name="search">
       				<button type="submit">Search</button>

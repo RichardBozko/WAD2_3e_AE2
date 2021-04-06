@@ -12,11 +12,9 @@
             {% if studies %}
             <ul>
                 {% for study in studies %}
-                <a href="{{study.url}}">{{ study.title}}</a><br>
+                <a href="{{study.url}}">{{ study.title}}</a>
                 up votes: {{ study.up_votes}}
                 down votes: {{ study.up_votes}}<br>
-                <button type="button">Up Vote!</button>
-                <button type="button">Down Vote :(</button><br>
                 <form action="{% url 'scishare:add_study_to_group' %}">
      		    <input type="hidden"
             	    name="study" value = {{ study.id }}>
@@ -24,7 +22,6 @@
             	    value="Add Study to Group">
 			    </form>
 			<br>
-
 
                 {% endfor %}
             </ul>
@@ -34,6 +31,7 @@
         {% else %}
             The specified category does not exist.
         {% endif %}
+
 {% endblock %}
 {% block top_block %}
 <div class="top">

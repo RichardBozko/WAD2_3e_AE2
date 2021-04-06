@@ -3,7 +3,7 @@
      Add a Group
 {% endblock %}
 {% block body_block %}
-        <h1>Add a Group</h1>
+        <h2>Add a Group:</h2>
         <div>
             <form id="group_form" method="post" action="{% url 'scishare:add_group' %}">
                 {% csrf_token %}
