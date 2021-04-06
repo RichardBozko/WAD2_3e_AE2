@@ -42,7 +42,7 @@ def register(request):
             # Allow freshly registered user to log in
             return redirect('scishare:login')
 
-# if GET -> return the page 
+    # if GET -> return the page 
     context = {'rform':rform}
     return render(request, 'registration/register.html', context)
 
