@@ -6,6 +6,15 @@ from scishare.models import *
 from scishare.forms import UserUpdateForm, UserCreateForm
 import json
 
+# Helper function like in AE1 -> makes a usesr to be used
+def make_me_a_man():
+		user = User.objects.get_or_create(username='Zaphod',
+                                      email='test@test.com')[0]
+		user.set_password('fourtytwo42')
+		user.save()
+
+		return user
+
 
 class TestViews(TestCase):
 
@@ -45,6 +54,8 @@ class TestViews(TestCase):
 		self.user_url = reverse('scishare:userAccount')
 		self.home_url = reverse('scishare:home')
 		self.clinet = Client()
+
+	
 
 	# Test the home view 
 	def test_home_view(self):
@@ -135,10 +146,29 @@ class TestViews(TestCase):
 		self.assertEquals(response.url, "/accounts/login/?next=/scishare/user/")
 
 
-	def test_login_f(self):
-		response = self.client.post("scishare:login")
+	def test_login_functionality(self):
+		'''
+		u_data = {'username': 'Trillian', 
+		 'password1': 'beetlejuice42',
+		 'password2': 'beetlejuice42',
+		  'email': 'TF@gmail.com'}
+		'''
+		#u_form = UserCreateForm(data = self.user_last)
+		#actual_u = u_form.save()
+		response = self.client.post(self.login_url_GET, {"username": "Spongebob", "password": "fourtytwo42"})
+		self.assertEqual(response.status_code, 200)
 
 
+
+	def test_logout_faulty(self):
+		response = self.client.get(reverse('scishare:logout'))
+		self.assertTrue(response.status_code, 302)
+		self.assertTrue(response.url, reverse('scishare:login'))
+
+	def test_logout_fine(self):
+		u = make_me_a_man()
+		self.client.login(username='Zaphod', password='fourtytwo42')
+		self.assertEqual(u.id, int(self.client.session['_auth_user_id']))
 
 
 
