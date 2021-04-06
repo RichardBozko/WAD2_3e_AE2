@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for scishare\views.py: 32%</title>
+    <title>Coverage for scishare\views.py: 35%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -18,13 +18,13 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>scishare\views.py</b> :
-            <span class="pc_cov">32%</span>
+            <span class="pc_cov">35%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
             182 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">59 run</button>
-            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">123 missing</button>
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">64 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">118 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
         </h2>
     </div>
@@ -105,16 +105,16 @@
     <p id="t51" class="pln"><span class="n"><a href="#t51">51</a></span><span class="t">    <span class="com"># If user is logged-in -> redirect to homepage</span>&nbsp;</span><span class="r"></span></p>
     <p id="t52" class="pln"><span class="n"><a href="#t52">52</a></span><span class="t">    <span class="com"># Extract relevant data from relevant type of request</span>&nbsp;</span><span class="r"></span></p>
     <p id="t53" class="run"><span class="n"><a href="#t53">53</a></span><span class="t">    <span class="key">if</span> <span class="nam">request</span><span class="op">.</span><span class="nam">method</span> <span class="op">==</span> <span class="str">'POST'</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t54" class="mis show_mis"><span class="n"><a href="#t54">54</a></span><span class="t">        <span class="nam">username</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">'username'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t55" class="mis show_mis"><span class="n"><a href="#t55">55</a></span><span class="t">        <span class="nam">password</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">'password'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t54" class="run"><span class="n"><a href="#t54">54</a></span><span class="t">        <span class="nam">username</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">'username'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t55" class="run"><span class="n"><a href="#t55">55</a></span><span class="t">        <span class="nam">password</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">POST</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">'password'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t56" class="pln"><span class="n"><a href="#t56">56</a></span><span class="t">        <span class="com"># Check whether UN+PW combination is valid</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t57" class="mis show_mis"><span class="n"><a href="#t57">57</a></span><span class="t">        <span class="nam">user</span> <span class="op">=</span> <span class="nam">authenticate</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">username</span> <span class="op">=</span> <span class="nam">username</span><span class="op">,</span> <span class="nam">password</span> <span class="op">=</span> <span class="nam">password</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t58" class="mis show_mis"><span class="n"><a href="#t58">58</a></span><span class="t">        <span class="key">if</span> <span class="nam">user</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t57" class="run"><span class="n"><a href="#t57">57</a></span><span class="t">        <span class="nam">user</span> <span class="op">=</span> <span class="nam">authenticate</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">username</span> <span class="op">=</span> <span class="nam">username</span><span class="op">,</span> <span class="nam">password</span> <span class="op">=</span> <span class="nam">password</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t58" class="run"><span class="n"><a href="#t58">58</a></span><span class="t">        <span class="key">if</span> <span class="nam">user</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t59" class="pln"><span class="n"><a href="#t59">59</a></span><span class="t">            <span class="com"># log the user in if ^ is valid</span>&nbsp;</span><span class="r"></span></p>
     <p id="t60" class="mis show_mis"><span class="n"><a href="#t60">60</a></span><span class="t">            <span class="nam">log_in</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span><span class="nam">user</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t61" class="mis show_mis"><span class="n"><a href="#t61">61</a></span><span class="t">            <span class="key">return</span> <span class="nam">redirect</span><span class="op">(</span><span class="str">'scishare:home'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t62" class="pln"><span class="n"><a href="#t62">62</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t63" class="mis show_mis"><span class="n"><a href="#t63">63</a></span><span class="t">            <span class="nam">messages</span><span class="op">.</span><span class="nam">info</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="str">'Username or password incorrect.'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t63" class="run"><span class="n"><a href="#t63">63</a></span><span class="t">            <span class="nam">messages</span><span class="op">.</span><span class="nam">info</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="str">'Username or password incorrect.'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t64" class="pln"><span class="n"><a href="#t64">64</a></span><span class="t">            <span class="com"># pass a message to login.html that ^</span>&nbsp;</span><span class="r"></span></p>
     <p id="t65" class="pln"><span class="n"><a href="#t65">65</a></span><span class="t">    <span class="com"># refresh the page + do ^</span>&nbsp;</span><span class="r"></span></p>
     <p id="t66" class="run"><span class="n"><a href="#t66">66</a></span><span class="t">    <span class="key">return</span> <span class="nam">render</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span><span class="str">'registration/login.html'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -351,7 +351,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-04-06 08:56 +0100
+            created at 2021-04-06 10:28 +0100
         </p>
     </div>
 </div>
