@@ -18,8 +18,6 @@
                   <button class="btn btn-primary unvote" id="{{ study.id }}" method="unvoted">Down Vote</button>
 
             </li>
-
-			<a href="{{study.url}}">{{ study.title }}</a>
 			<form action="{% url 'scishare:add_study_to_group' %}">
      		<input type="hidden"
             	name="study" value = {{ study.id }}>
