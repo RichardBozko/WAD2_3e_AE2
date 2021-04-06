@@ -12,7 +12,7 @@
 		<div class = "search_results">
 			<h2>Search results for {{search}}...</h2>
 			{% for study in studies %}
-<<<<<<< HEAD
+
 			<li>
 
                 <a href="{{study.url}}">{{ study.title}}</a>
@@ -20,7 +20,7 @@
                  <button class="btn btn-primary" id="{{ study.id }}" method="unvoted"><i class="fa fa-thumbs-o-down"></i>&nbsp;&nbsp;Don't like</button>
 
             </li>
-=======
+
 			<a href="{{study.url}}">{{ study.title }}</a>
 			<form action="{% url 'scishare:add_study_to_group' %}">
      		<input type="hidden"
@@ -29,13 +29,13 @@
             	value="Add Study to Group">
 			</form>
 			<br>
->>>>>>> 962720fb287692c5eab1941e25b9331582f7503c
+
     		{% endfor %}
 		</div>
 	{% else %}
 		<h2>No search results for {{search}}...</h2>
 	{% endif %}
-<<<<<<< HEAD
+
     <script src="{% static 'layer/layer.js' %}"></script>
     <script>
       $(function () {
@@ -49,7 +49,7 @@
       })
 
     </script>
-=======
+
     <h3>Another search:</h3>
     <div>
         <form action="{% url 'scishare:search_results' %}">
@@ -57,6 +57,6 @@
             <button type="submit">Search</button>
         </form></div>
     </div>
->>>>>>> 962720fb287692c5eab1941e25b9331582f7503c
+
 </div>
 {% endblock %}
