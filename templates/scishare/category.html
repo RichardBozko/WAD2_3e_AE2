@@ -12,9 +12,9 @@
             {% if studies %}
             <ul>
                 {% for study in studies %}
-                <a href="{{study.url}}">{{ study.title}}</a>
-                <p>Up votes: {{ study.up_votes}}<br>
-                    Down votes: {{ study.up_votes}}<br></p>
+                <a href="{{study.url}}">{{ study.title}}</a><br>
+                    Up votes: {{ study.up_votes}}<br>
+                    Down votes: {{ study.up_votes}}<br>
                 <form action="{% url 'scishare:add_study_to_group' %}">
      		    <input type="hidden"
             	    name="study" value = {{ study.id }}>
