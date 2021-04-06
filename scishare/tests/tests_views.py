@@ -28,6 +28,11 @@ class TestViews(TestCase):
 		self.home_url = reverse('scishare:home')
 		#self.register_url_POST = ""
 
+	# Test the home view 
+	def test_home_view(self):
+		response = self.client.post(self.home_url)
+		self.assertEquals(response.status_code, 200)
+
 	# Test whether GET works for register page
 	def test_register_GET(self):
 		clinet = Client()
@@ -52,6 +57,7 @@ class TestViews(TestCase):
 		u_form = UserCreateForm(data = u_data)
 		self.assertTrue(u_form.is_valid())
 		actual_user = u_form.save()
+		self.assertEquals(User.objects.all().count(),1)
 		self.assertTrue(self.client.login(username='Ford_Prefect', password='beetlejuice42'))
 		
 	# Check whether errors happen if empty form is supplied
@@ -59,6 +65,8 @@ class TestViews(TestCase):
 		request = self.client.post(reverse('scishare:register'))
 		content = request.content.decode('utf-8')
 		self.assertTrue('<ul class="errorlist">' in content)
+
+
 
 
 '''
