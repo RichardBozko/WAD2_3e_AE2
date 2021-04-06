@@ -8,10 +8,15 @@
 		max-height:200px;
 		margin: 0 auto;
 		border-radius: 50%;
+		float: right;
 	}
+
 </style>
 
-<h2 style="text-align: center">User Profile</h2>
+<h2 style="text-align: center">
+	Your Profile
+<img class="pic" src="{{ request.user.userprofile.picture.url }}" align="right" >
+</h2>
 
 
 <form method="POST" action="" enctype="multipart/form-data">
@@ -22,6 +27,6 @@
 </form>
 <li><a href="{% url 'scishare:password_reset' %}">Reset Password</a></li>
 <br/>
-<img class="pic" src="{{ request.user.userprofile.picture.url }}" >
+
 
 {% endblock %}

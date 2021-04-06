@@ -14,7 +14,7 @@
 			margin: 0;
 			padding: 0;
 			height: 100%;
-			background: #111b73 !important;
+			background: #fff;
 		}
 		.user_card {
 			width: 350px;
@@ -42,26 +42,26 @@
 		}
 		.login_btn {
 			width: 100%;
-			background: #111b73 !important;
-			color: white !important;
+			background: #fff;
+			color: black;
 		}
 		.login_btn:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
+			box-shadow: none;
+			outline: 0px ;
 		}
 		.login_container {
 			padding: 0 2rem;
 		}
 		.input-group-text {
-			background: #f7ba5b !important;
-			color: white !important;
-			border: 0 !important;
-			border-radius: 0.25rem 0 0 0.25rem !important;
+			background: #808080;
+			color: white;
+			border: 0;
+			border-radius: 0.25rem 0 0 0.25rem;
 		}
 		.input_user,
 		.input_pass:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
+			box-shadow: none ;
+			outline: 0px;
 		}
 
 	</style>
@@ -113,7 +113,10 @@
 
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
-						Already have an account? <a href="{% url 'scishare:login' %}" class="ml-2">Login</a>
+						<p style = "color:white">
+							Already have an account? <a href="{% url 'scishare:login' %}" class="ml-2">Login</a>
+						</p>
+						 
 					</div>
 				</div>
 			</div>

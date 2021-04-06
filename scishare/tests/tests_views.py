@@ -159,7 +159,6 @@ class TestViews(TestCase):
 		self.assertEqual(response.status_code, 200)
 
 
-
 	def test_logout_faulty(self):
 		response = self.client.get(reverse('scishare:logout'))
 		self.assertTrue(response.status_code, 302)
