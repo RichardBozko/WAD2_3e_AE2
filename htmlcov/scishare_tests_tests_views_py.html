@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for scishare\tests\tests_views.py: 89%</title>
+    <title>Coverage for scishare\tests\tests_views.py: 100%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -18,13 +18,13 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>scishare\tests\tests_views.py</b> :
-            <span class="pc_cov">89%</span>
+            <span class="pc_cov">100%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
-            53 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">47 run</button>
-            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">6 missing</button>
+            57 statements &nbsp;
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">57 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">0 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
         </h2>
     </div>
@@ -135,32 +135,32 @@
     <p id="t81" class="run"><span class="n"><a href="#t81">81</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="nam">User</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="nam">username</span> <span class="op">=</span> <span class="str">"Ford_Prefect"</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t82" class="run"><span class="n"><a href="#t82">82</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="nam">User</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="nam">email</span> <span class="op">=</span> <span class="str">"FP@gmail.com"</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t83" class="run"><span class="n"><a href="#t83">83</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">client</span><span class="op">.</span><span class="nam">login</span><span class="op">(</span><span class="nam">username</span><span class="op">=</span><span class="str">'Ford_Prefect'</span><span class="op">,</span> <span class="nam">password</span><span class="op">=</span><span class="str">'beetlejuice42'</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t84" class="mis show_mis"><span class="n"><a href="#t84">84</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="nam">actual_user</span><span class="op">.</span><span class="nam">is_authenticated</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t84" class="run"><span class="n"><a href="#t84">84</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="nam">actual_user</span><span class="op">.</span><span class="nam">is_authenticated</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t85" class="pln"><span class="n"><a href="#t85">85</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t86" class="pln"><span class="n"><a href="#t86">86</a></span><span class="t">        <span class="com"># Check whether errors happen if empty form is supplied</span>&nbsp;</span><span class="r"></span></p>
     <p id="t87" class="run"><span class="n"><a href="#t87">87</a></span><span class="t">        <span class="key">def</span> <span class="nam">test_register_POST_bad</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t88" class="run"><span class="n"><a href="#t88">88</a></span><span class="t">                <span class="nam">request</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">client</span><span class="op">.</span><span class="nam">post</span><span class="op">(</span><span class="nam">reverse</span><span class="op">(</span><span class="str">'scishare:register'</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t89" class="run"><span class="n"><a href="#t89">89</a></span><span class="t">                <span class="nam">content</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">content</span><span class="op">.</span><span class="nam">decode</span><span class="op">(</span><span class="str">'utf-8'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t90" class="mis show_mis"><span class="n"><a href="#t90">90</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="str">'&lt;ul class="errorlist">'</span> <span class="key">in</span> <span class="nam">content</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t90" class="run"><span class="n"><a href="#t90">90</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="str">'&lt;ul class="errorlist">'</span> <span class="key">in</span> <span class="nam">content</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t91" class="pln"><span class="n"><a href="#t91">91</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t92" class="pln"><span class="n"><a href="#t92">92</a></span><span class="t">        <span class="com"># Get error message when attempt to reg with invalid email</span>&nbsp;</span><span class="r"></span></p>
     <p id="t93" class="run"><span class="n"><a href="#t93">93</a></span><span class="t">        <span class="key">def</span> <span class="nam">test_cant_reg_w_invalid_email</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t94" class="run"><span class="n"><a href="#t94">94</a></span><span class="t">                <span class="nam">response</span><span class="op">=</span><span class="nam">self</span><span class="op">.</span><span class="nam">client</span><span class="op">.</span><span class="nam">post</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">register_url_GET</span><span class="op">,</span><span class="nam">self</span><span class="op">.</span><span class="nam">user_invalid_email</span><span class="op">,</span><span class="nam">format</span><span class="op">=</span><span class="str">'text/html'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t95" class="run"><span class="n"><a href="#t95">95</a></span><span class="t">                <span class="nam">content</span> <span class="op">=</span> <span class="nam">response</span><span class="op">.</span><span class="nam">content</span><span class="op">.</span><span class="nam">decode</span><span class="op">(</span><span class="str">'utf-8'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t96" class="mis show_mis"><span class="n"><a href="#t96">96</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="str">'&lt;ul class="errorlist">'</span> <span class="key">in</span> <span class="nam">content</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t96" class="run"><span class="n"><a href="#t96">96</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="str">'&lt;ul class="errorlist">'</span> <span class="key">in</span> <span class="nam">content</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t97" class="pln"><span class="n"><a href="#t97">97</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t98" class="pln"><span class="n"><a href="#t98">98</a></span><span class="t">        <span class="com"># Login fails when faulty info is supplied</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t99" class="mis show_mis"><span class="n"><a href="#t99">99</a></span><span class="t">        <span class="key">def</span> <span class="nam">test_login_POST_bad</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t99" class="run"><span class="n"><a href="#t99">99</a></span><span class="t">        <span class="key">def</span> <span class="nam">test_login_POST_bad</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t100" class="pln"><span class="n"><a href="#t100">100</a></span><span class="t">                <span class="com">#clinet = Client()</span>&nbsp;</span><span class="r"></span></p>
     <p id="t101" class="run"><span class="n"><a href="#t101">101</a></span><span class="t">                <span class="nam">response</span><span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">client</span><span class="op">.</span><span class="nam">post</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">login_url_GET</span><span class="op">,</span><span class="op">{</span><span class="str">'password'</span><span class="op">:</span><span class="str">'passwoud'</span><span class="op">,</span><span class="str">'username'</span><span class="op">:</span><span class="str">''</span><span class="op">}</span><span class="op">,</span><span class="nam">format</span><span class="op">=</span><span class="str">'text/html'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t102" class="run"><span class="n"><a href="#t102">102</a></span><span class="t">                <span class="nam">content</span> <span class="op">=</span> <span class="nam">response</span><span class="op">.</span><span class="nam">content</span><span class="op">.</span><span class="nam">decode</span><span class="op">(</span><span class="str">'utf-8'</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t103" class="mis show_mis"><span class="n"><a href="#t103">103</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="str">'incorrect'</span> <span class="key">in</span> <span class="nam">content</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t103" class="run"><span class="n"><a href="#t103">103</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertTrue</span><span class="op">(</span><span class="str">'incorrect'</span> <span class="key">in</span> <span class="nam">content</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t104" class="pln"><span class="n"><a href="#t104">104</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t105" class="pln"><span class="n"><a href="#t105">105</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t106" class="pln"><span class="n"><a href="#t106">106</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t107" class="pln"><span class="n"><a href="#t107">107</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t108" class="pln"><span class="n"><a href="#t108">108</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t109" class="pln"><span class="n"><a href="#t109">109</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t105" class="pln"><span class="n"><a href="#t105">105</a></span><span class="t">        <span class="com"># Test user account works</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t106" class="run"><span class="n"><a href="#t106">106</a></span><span class="t">        <span class="key">def</span> <span class="nam">test_user_account</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t107" class="run"><span class="n"><a href="#t107">107</a></span><span class="t">                <span class="nam">response</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">client</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">user_url</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t108" class="run"><span class="n"><a href="#t108">108</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertEquals</span><span class="op">(</span><span class="nam">response</span><span class="op">.</span><span class="nam">status_code</span><span class="op">,</span> <span class="num">302</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t109" class="run"><span class="n"><a href="#t109">109</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">assertEquals</span><span class="op">(</span><span class="nam">response</span><span class="op">.</span><span class="nam">url</span><span class="op">,</span> <span class="str">"/accounts/login/?next=/scishare/user/"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t110" class="pln"><span class="n"><a href="#t110">110</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t111" class="pln"><span class="n"><a href="#t111">111</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t112" class="pln"><span class="n"><a href="#t112">112</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -174,40 +174,46 @@
     <p id="t120" class="pln"><span class="n"><a href="#t120">120</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t121" class="pln"><span class="n"><a href="#t121">121</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t122" class="pln"><span class="n"><a href="#t122">122</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t123" class="mis show_mis"><span class="n"><a href="#t123">123</a></span><span class="t"><span class="str">'''</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t124" class="pln"><span class="n"><a href="#t124">124</a></span><span class="t"><span class="str">        #clinet = Client()</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t123" class="pln"><span class="n"><a href="#t123">123</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t124" class="pln"><span class="n"><a href="#t124">124</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t125" class="pln"><span class="n"><a href="#t125">125</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t126" class="pln"><span class="n"><a href="#t126">126</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t127" class="pln"><span class="n"><a href="#t127">127</a></span><span class="t"><span class="str">                #response = clinet.get(self.register_url_GET)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t128" class="pln"><span class="n"><a href="#t128">128</a></span><span class="t"><span class="str">                #self.assertEquals(response.status_code, 200)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t129" class="pln"><span class="n"><a href="#t129">129</a></span><span class="t"><span class="str">                #self.assertTemplateUsed(response, 'registration/register.html')</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t130" class="pln"><span class="n"><a href="#t130">130</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t131" class="pln"><span class="n"><a href="#t131">131</a></span><span class="t"><span class="str">        def test_login_POST(self):</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t132" class="pln"><span class="n"><a href="#t132">132</a></span><span class="t"><span class="str">                clinet = Client()</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t133" class="pln"><span class="n"><a href="#t133">133</a></span><span class="t"><span class="str">                response = clinet.get(self.login_url_GET)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t134" class="pln"><span class="n"><a href="#t134">134</a></span><span class="t"><span class="str">                self.assertEquals(response.status_code, 200)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t135" class="pln"><span class="n"><a href="#t135">135</a></span><span class="t"><span class="str">                self.assertTemplateUsed(response, 'registration/login.html')</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t127" class="pln"><span class="n"><a href="#t127">127</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t128" class="pln"><span class="n"><a href="#t128">128</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t129" class="run"><span class="n"><a href="#t129">129</a></span><span class="t"><span class="str">'''</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t130" class="pln"><span class="n"><a href="#t130">130</a></span><span class="t"><span class="str">        #clinet = Client()</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t131" class="pln"><span class="n"><a href="#t131">131</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t132" class="pln"><span class="n"><a href="#t132">132</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t133" class="pln"><span class="n"><a href="#t133">133</a></span><span class="t"><span class="str">                #response = clinet.get(self.register_url_GET)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t134" class="pln"><span class="n"><a href="#t134">134</a></span><span class="t"><span class="str">                #self.assertEquals(response.status_code, 200)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t135" class="pln"><span class="n"><a href="#t135">135</a></span><span class="t"><span class="str">                #self.assertTemplateUsed(response, 'registration/register.html')</span>&nbsp;</span><span class="r"></span></p>
     <p id="t136" class="pln"><span class="n"><a href="#t136">136</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t137" class="pln"><span class="n"><a href="#t137">137</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t138" class="pln"><span class="n"><a href="#t138">138</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t139" class="pln"><span class="n"><a href="#t139">139</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t140" class="pln"><span class="n"><a href="#t140">140</a></span><span class="t"><span class="str">class TestViews(TestCase):</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t141" class="pln"><span class="n"><a href="#t141">141</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t142" class="pln"><span class="n"><a href="#t142">142</a></span><span class="t"><span class="str">        def setUp(self):</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t143" class="pln"><span class="n"><a href="#t143">143</a></span><span class="t"><span class="str">                self.client = Client()</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t137" class="pln"><span class="n"><a href="#t137">137</a></span><span class="t"><span class="str">        def test_login_POST(self):</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t138" class="pln"><span class="n"><a href="#t138">138</a></span><span class="t"><span class="str">                clinet = Client()</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t139" class="pln"><span class="n"><a href="#t139">139</a></span><span class="t"><span class="str">                response = clinet.get(self.login_url_GET)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t140" class="pln"><span class="n"><a href="#t140">140</a></span><span class="t"><span class="str">                self.assertEquals(response.status_code, 200)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t141" class="pln"><span class="n"><a href="#t141">141</a></span><span class="t"><span class="str">                self.assertTemplateUsed(response, 'registration/login.html')</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t142" class="pln"><span class="n"><a href="#t142">142</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t143" class="pln"><span class="n"><a href="#t143">143</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t144" class="pln"><span class="n"><a href="#t144">144</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t145" class="pln"><span class="n"><a href="#t145">145</a></span><span class="t"><span class="str">        def test_register_GET(self):</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t146" class="pln"><span class="n"><a href="#t146">146</a></span><span class="t"><span class="str">                clinet = Client()</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t147" class="pln"><span class="n"><a href="#t147">147</a></span><span class="t"><span class="str">                response = clinet.get(reverse('scishare:register'))</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t148" class="pln"><span class="n"><a href="#t148">148</a></span><span class="t"><span class="str">                self.assertEquals(response.status_code, 200)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t149" class="pln"><span class="n"><a href="#t149">149</a></span><span class="t"><span class="str">                self.assertTemplateUsed(response, 'registration/register.html')</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t150" class="pln"><span class="n"><a href="#t150">150</a></span><span class="t"><span class="str">'''</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t145" class="pln"><span class="n"><a href="#t145">145</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t146" class="pln"><span class="n"><a href="#t146">146</a></span><span class="t"><span class="str">class TestViews(TestCase):</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t147" class="pln"><span class="n"><a href="#t147">147</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t148" class="pln"><span class="n"><a href="#t148">148</a></span><span class="t"><span class="str">        def setUp(self):</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t149" class="pln"><span class="n"><a href="#t149">149</a></span><span class="t"><span class="str">                self.client = Client()</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t150" class="pln"><span class="n"><a href="#t150">150</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t151" class="pln"><span class="n"><a href="#t151">151</a></span><span class="t"><span class="str">        def test_register_GET(self):</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t152" class="pln"><span class="n"><a href="#t152">152</a></span><span class="t"><span class="str">                clinet = Client()</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t153" class="pln"><span class="n"><a href="#t153">153</a></span><span class="t"><span class="str">                response = clinet.get(reverse('scishare:register'))</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t154" class="pln"><span class="n"><a href="#t154">154</a></span><span class="t"><span class="str">                self.assertEquals(response.status_code, 200)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t155" class="pln"><span class="n"><a href="#t155">155</a></span><span class="t"><span class="str">                self.assertTemplateUsed(response, 'registration/register.html')</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t156" class="pln"><span class="n"><a href="#t156">156</a></span><span class="t"><span class="str">'''</span>&nbsp;</span><span class="r"></span></p>
 </div>
 <div id="footer">
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2021-04-06 10:47 +0100
+            created at 2021-04-06 11:02 +0100
         </p>
     </div>
 </div>

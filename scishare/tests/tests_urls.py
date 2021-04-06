@@ -21,4 +21,8 @@ class TestUrls(TestCase):
 		url = reverse('scishare:show_category', args = ['my_favorite_slug'])
 		self.assertEquals(resolve(url).func, show_category)
 
+	def test_user_account_resolves(self):
+		url = reverse('scishare:userAccount')
+		self.assertEquals(resolve(url).func, userAccount)
+
 	
